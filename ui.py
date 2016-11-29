@@ -1,4 +1,34 @@
 
+import common
+import os
+
+
+def convert_table_items_to_string(table):
+    """ Returns @table with it's items converted to string to ensure everything has length """
+    for line_index in range(len(table)):
+        for item_index in range(len(table[line_index])):
+            table[line_index][item_index] = str(table[line_index][item_index])
+    return table
+
+
+def get_max_item_length(item_list):
+    """ Returns longest item's length """
+    max_length = -1
+    for item in item_list:
+        max_length = max(max_length, len(item))
+    return max_length
+
+
+def get_column_widths(table, title_list):
+    """ Returns list of columns' max widths """
+    column_widths = [len(item) for item in title_list]
+    for index in range(len(column_widths)):
+        column = []
+        for line in table:
+            column.append(line[index])
+        column_widths[index] = max(column_widths[index], get_max_item_length(column))
+    return column_widths
+
 
 # This function needs to print outputs like this:
 # /-----------------------------------\
@@ -12,10 +42,26 @@
 # @table: list of lists - the table to print out
 # @title_list: list of strings - the head of the table
 def print_table(table, title_list):
+    """ Prints data in a nice spreadsheet-like format """
+    table = convert_table_items_to_string(table)
+    column_widths = get_column_widths(table, title_list)
+    column_widths = [max(8, width + 2) for width in column_widths]  # setting min padding
 
-    # your code
+    dash_length = (common.custom_sum(column_widths) + len(column_widths) - 1)
+    print("/" + ("-" * dash_length) + "\\")
 
-    pass
+    formatted_title_list = title_list
+    for index in range(len(formatted_title_list)):
+        formatted_title_list[index] = formatted_title_list[index].center(column_widths[index])
+    print("|" + "|".join(formatted_title_list) + "|")
+
+    for line in table:
+        formatted_item_list = line
+        for index in range(len(formatted_item_list)):
+            formatted_item_list[index] = formatted_item_list[index].center(column_widths[index])
+        print("|" + ("-" * dash_length) + "|")
+        print("|" + "|".join(formatted_item_list) + "|")
+    print("\\" + ("-" * dash_length) + "/")
 
 
 # This function needs to print result of the special functions
@@ -24,7 +70,7 @@ def print_table(table, title_list):
 # @label: string - label of the result
 def print_result(result, label):
 
-    # your code
+    # TODO:your code
 
     pass
 
@@ -43,10 +89,12 @@ def print_result(result, label):
 # @list_options: list of strings - the options in the menu
 # @exit_message: string - the last option with (0) (example: "Back to main menu")
 def print_menu(title, list_options, exit_message):
-
-    # your code
-
-    pass
+    """ Prints menu """
+    os.system("clear")
+    print(title + ":")
+    for option_index in range(len(list_options)):
+        print("({}) {}".format(option_index+1, list_options[option_index]))
+    print("(0) {}:".format(exit_message))
 
 
 # This function gets a list of inputs from the user by the terminal
@@ -55,10 +103,11 @@ def print_menu(title, list_options, exit_message):
 # @title: string - title of the "input section"
 # @inputs: list of string - list of the received values from the user
 def get_inputs(list_labels, title):
+    """ Asks questions in @list_labels from the user, then returns all the answers as a list """
     inputs = []
-
-    # your code
-
+    print(title)
+    for label in list_labels:
+        inputs.append(input(label))
     return inputs
 
 
@@ -66,7 +115,6 @@ def get_inputs(list_labels, title):
 #
 # @message: string - the error message
 def print_error_message(message):
-
-    # your code
-
-    pass
+    """ Prints error message """
+    print("[ERROR]: {}".format(message))
+    # NOTE:maybe???
