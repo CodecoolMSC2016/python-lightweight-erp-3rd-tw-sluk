@@ -10,8 +10,7 @@
 
 # importing everything you need
 import os
-import common
-import ui
+
 from importlib.machinery import SourceFileLoader
 current_file_path = os.path.dirname(os.path.abspath(__file__))
 # User interface module
@@ -37,22 +36,20 @@ def start_module():
     table_accounting = []
     with open("accounting/items.csv", "r") as my_file:
         for lines in my_file:
-            table_accounting.append(lines.strip().split("\t"))
+            table_accounting.append(lines.strip().split(";"))
 
     ui.print_menu("Accounting Manager", account_table, "Back to main menu")
     inputs = ui.get_inputs(["Please enter a number: "], "")
     option = inputs[0]
     if option == "1":
-        show_table(table_accounting)
-    elif option == "2":
         add(table_accounting)
-    elif option == "3":
+    elif option == "2":
         remove(table_accounting)
-    elif option == "4":
+    elif option == "3":
         update(table_accounting)
-    elif option == "5":
+    elif option == "4":
         which_year_max(table_accounting)
-    elif option == "6":
+    elif option == "5":
         avg_amount(table_accounting)
     elif option == "0":
         sys.exit(0)
@@ -77,7 +74,7 @@ def show_table(table):
 # @table: list of lists
 def add(table):
 
-    new_id = ui.get.inputs(["Give an ID: ", "Give a month: ", "Give a day: ", "Give a year: ",
+    new_id = ui.get_inputs(["Give an ID: ", "Give a month: ", "Give a day: ", "Give a year: ",
                             "In or out(come): ", "Amount: " ], "Adding record")
 
     table.append([new_id[0], new_id[1], new_id[2], new_id[3], new_id[4], new_id[5]])
