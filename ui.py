@@ -3,6 +3,13 @@ import common
 import os
 
 
+def convert_table_items_to_string(table):
+    for line_index in range(len(table)):
+        for item_index in range(len(table[line_index])):
+            table[line_index][item_index] = str(table[line_index][item_index])
+    return table
+
+
 def get_max_item_length(item_list):
     """ Returns longest item's length """
     max_length = -1
@@ -35,10 +42,11 @@ def get_column_widths(table, title_list):
 # @title_list: list of strings - the head of the table
 def print_table(table, title_list):
     """ Prints data in a nice spreadsheet-like format """
+    table = convert_table_items_to_string(table)
     column_widths = get_column_widths(table, title_list)
     column_widths = [max(8, width + 2) for width in column_widths]  # setting min padding
 
-    dash_length = (custom_sum(column_widths) + len(column_widths) - 1)
+    dash_length = (common.custom_sum(column_widths) + len(column_widths) - 1)
     print("/" + ("-" * dash_length) + "\\")
 
     formatted_title_list = title_list
