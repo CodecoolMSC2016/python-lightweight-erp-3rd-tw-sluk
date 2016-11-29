@@ -62,6 +62,7 @@ def print_table(table, title_list):
         print("|" + ("-" * dash_length) + "|")
         print("|" + "|".join(formatted_item_list) + "|")
     print("\\" + ("-" * dash_length) + "/")
+    input("Press any key to continue")
 
 
 # This function needs to print result of the special functions
