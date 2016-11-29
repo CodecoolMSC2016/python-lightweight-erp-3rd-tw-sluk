@@ -4,6 +4,7 @@ import os
 
 
 def convert_table_items_to_string(table):
+    """ Returns @table with it's items converted to string to ensure everything has length """
     for line_index in range(len(table)):
         for item_index in range(len(table[line_index])):
             table[line_index][item_index] = str(table[line_index][item_index])
