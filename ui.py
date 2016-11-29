@@ -1,5 +1,6 @@
 
 import common
+import os
 
 
 def get_max_item_length(item_list):
@@ -33,8 +34,10 @@ def get_column_widths(table, title_list):
 # @table: list of lists - the table to print out
 # @title_list: list of strings - the head of the table
 def print_table(table, title_list):
+    """ Prints data in a nice spreadsheet-like format """
     column_widths = get_column_widths(table, title_list)
-    column_widths = [max(8, width + 2) for width in column_widths]
+    column_widths = [max(8, width + 2) for width in column_widths]  # setting min padding
+
     dash_length = (custom_sum(column_widths) + len(column_widths) - 1)
     print("/" + ("-" * dash_length) + "\\")
 
@@ -42,6 +45,7 @@ def print_table(table, title_list):
     for index in range(len(formatted_title_list)):
         formatted_title_list[index] = formatted_title_list[index].center(column_widths[index])
     print("|" + "|".join(formatted_title_list) + "|")
+
     for line in table:
         formatted_item_list = line
         for index in range(len(formatted_item_list)):
@@ -76,6 +80,8 @@ def print_result(result, label):
 # @list_options: list of strings - the options in the menu
 # @exit_message: string - the last option with (0) (example: "Back to main menu")
 def print_menu(title, list_options, exit_message):
+    """ Prints menu """
+    os.system("clear")
     print(title + ":")
     for option_index in range(len(list_options)):
         print("({}) {}".format(option_index+1, list_options[option_index]))
@@ -88,6 +94,7 @@ def print_menu(title, list_options, exit_message):
 # @title: string - title of the "input section"
 # @inputs: list of string - list of the received values from the user
 def get_inputs(list_labels, title):
+    """ Asks questions in @list_labels from the user, then returns all the answers as a list """
     inputs = []
     print(title)
     for label in list_labels:
@@ -99,5 +106,6 @@ def get_inputs(list_labels, title):
 #
 # @message: string - the error message
 def print_error_message(message):
+    """ Prints error message """
     print("[ERROR]: {}".format(message))
     # NOTE:maybe???
