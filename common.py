@@ -17,3 +17,11 @@ def generate_random(table):
     # your code
 
     return generated
+
+
+def custom_sum(int_list):
+    """ Sum of list items, because we can't use built-in sum :( """
+    sum_of_numbers = 0
+    for number in int_list:
+        sum_of_numbers += int(number)
+    return sum_of_numbers
