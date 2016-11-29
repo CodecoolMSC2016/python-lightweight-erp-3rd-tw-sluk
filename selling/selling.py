@@ -26,20 +26,15 @@ common = SourceFileLoader("common", current_file_path + "/../common.py").load_mo
 # we need to reach the default and the special functions of this module from the module menu
 #
 def start_module():
-
-    # you code
-
-    pass
+    selling_table = common.read_csv("./selling/sellings.csv")
+    show_table(selling_table)
 
 
 # print the default table of records from the file
 #
 # @table: list of lists
 def show_table(table):
-
-    # your code
-
-    pass
+    ui.print_table(table, ["ID", "Title", "Price", "Month", "Day", "Year"])
 
 
 # Ask a new record as an input from the user than add it to @table, than return @table
@@ -47,7 +42,7 @@ def show_table(table):
 # @table: list of lists
 def add(table):
 
-    # your code
+    # TODO:your code
 
     return table
 
@@ -58,7 +53,7 @@ def add(table):
 # @id_: string
 def remove(table, id_):
 
-    # your code
+    # TODO:your code
 
     return table
 
@@ -70,7 +65,7 @@ def remove(table, id_):
 # @id_: string
 def update(table, id_):
 
-    # your code
+    # TODO:your code
 
     return table
 
@@ -83,7 +78,7 @@ def update(table, id_):
 # if there are more than one with the lowest price, return the first of descending alphabetical order
 def get_lowest_price_item_id(table):
 
-    # your code
+    # TODO:your code
 
     pass
 
@@ -92,6 +87,6 @@ def get_lowest_price_item_id(table):
 # return type: list of lists (the filtered table)
 def get_items_sold_between(table, month_from, day_from, year_from, month_to, day_to, year_to):
 
-    # your code
+    # TODO:your code
 
     pass

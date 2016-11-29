@@ -25,3 +25,12 @@ def custom_sum(int_list):
     for number in int_list:
         sum_of_numbers += int(number)
     return sum_of_numbers
+
+
+def read_csv(file_name):
+    """ Returns th content of a csv file as a 2d list """
+    table = []
+    with open(file_name) as table_file:
+        for line in table_file:
+            table.append([item.strip() for item in line.split(";")])
+    return table
