@@ -22,8 +22,12 @@ common = SourceFileLoader("common", current_file_path + "/../common.py").load_mo
 # we need to reach the default and the special functions of this module from the module menu
 #
 def start_module():
-
-    # you code
+    list_options = ["Show table",
+                    "Add",
+                    "Remove ",
+                    "Update",
+                    "Show oldest person",
+                    "Show person closest to average age"]
 
     pass
 
@@ -66,7 +70,7 @@ def remove(table, id_):
 # @id_: string
 def update(table, id_):
 
-    # your code
+
 
     return table
 
@@ -77,16 +81,31 @@ def update(table, id_):
 # the question: Who is the oldest person ?
 # return type: list of strings (name or names if there are two more with the same value)
 def get_oldest_person(table):
-
-    # your code
-
+    min = 3000
+    people = []
+    names = []
+    for year in table:
+        if int(year[2]) < min:
+            min = int(year[2])
+    for name in table:
+        if int(name[2]) == min:
+            people.append(name[1])
+    return people
     pass
-
-
 # the question: Who is the closest to the average age ?
 # return type: list of strings (name or names if there are two more with the same value)
 def get_persons_closest_to_average(table):
-
-    # your code
-
-    pass
+    person_closest_average = []
+    average = 0
+    counter = 0
+    for row in table:
+        average += int(row[2])
+        counter += 1
+    average = average / counter
+    difference = 9999
+        if abs(int(row[2]) - average) < difference:
+            difference = abs(int(row[2]) - average)
+    for row in table:
+        if difference == abs(int(row[2]) - average):
+            person_closest_average.append(row[1])
+    return person_closest_average
