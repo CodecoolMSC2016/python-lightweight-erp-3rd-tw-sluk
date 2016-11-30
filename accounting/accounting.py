@@ -47,7 +47,11 @@ def start_module():
             remove(table, ID[0])
         elif option == "3":
             ID = ui.get_inputs(["Give an ID: "], "")
-            update(table, ID[0])
+            if ID not in table:
+                print("Not existing ID")
+                ui.get_inputs(["Press any key to continue..."], "")
+            else:
+                update(table, ID[0])
         elif option == "4":
             print(ui.print_result(which_year_max(table), ''), " has the highest profit")
             ui.get_inputs(["Press any key to continue..."], "")
