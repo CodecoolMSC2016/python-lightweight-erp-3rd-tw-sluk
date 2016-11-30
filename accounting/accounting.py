@@ -71,9 +71,6 @@ def show_table(table):
     ui.print_table(table, ["ID", "Month", "Day", "Year", "In/out", "Amount"])
 
 
-    pass
-
-
 # Ask a new record as an input from the user than add it to @table, than return @table
 #
 # @table: list of lists
@@ -159,10 +156,11 @@ def which_year_max(table):
 # the question: What is the average (per item) profit in a given year? [(profit)/(items count) ]
 # return the answer (number)
 def avg_amount(table, year):
+    print(table)
     avg = 0
     counter = 0
     for item in table:
-        if int(item[3]) == year:
+        if int(item[3]) == int(year):
             if item[4] == 'in':
                 avg += int(item[5])
             elif item[4] == 'out':
