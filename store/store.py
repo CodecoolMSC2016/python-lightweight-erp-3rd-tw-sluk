@@ -24,8 +24,14 @@ common = SourceFileLoader("common", current_file_path + "/../common.py").load_mo
 # we need to reach the default and the special functions of this module from the module menu
 #
 def start_module():
+    store_table = ["Adding",
+                   "Remove",
+                   "Update",
+                   "Highest profit",
+                   "Avg profit",
+                   "Pringting out"]
 
-    # you code
+    table = data_manager.get_table_from_file("accounting/items.csv")
 
     pass
 
