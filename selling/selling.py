@@ -27,9 +27,41 @@ common = SourceFileLoader("common", current_file_path + "/../common.py").load_mo
 #
 def start_module():
     selling_table = data_manager.get_table_from_file("./selling/sellings.csv")
-    print(selling_table)
-    show_table(selling_table)
-    ui.get_inputs(["Press enter to continue..."], "")
+    selling_menu = ["Show table",
+                    "Add selling",
+                    "Remove selling",
+                    "Update selling",
+                    "Lowest priced item's ID",
+                    "Sold between"]
+    while True:
+        ui.print_menu("Selling", selling_menu, "Save and back to main menu")
+        inputs = ui.get_inputs(["Please enter a number: "], "")
+        option = inputs[0]
+        if option == "1":
+            show_table(selling_table)
+        elif option == "2":
+            selling_table = add(selling_table)
+        elif option == "3":
+            input_string = ui.get_inputs(["Give an ID: "], "")
+            ID = input_string[0]
+            selling_table = remove(selling_table, ID)
+        elif option == "4":
+            input_string = ui.get_inputs(["Give an ID: "], "")
+            ID = input_string[0]
+            if ID in table:
+                update(selling_table, ID)
+            else:
+                ui.print_error_message("Not existing ID")
+        elif option == "5":
+            ui.print_result(get_lowest_price_item_id(selling_table), "Lowest priced item's ID:")
+        elif option == "6":
+            avg_year = ui.get_inputs(["Give a year, you want to check:"], "")
+            result = avg_amount(table, avg_year[0])
+            print("The Average profit in ", int(avg_year[0]), "was", ui.print_result(result, ''))
+            ui.get_inputs(["Press any key to continue..."], "")
+        elif option == "0":
+            break
+    data_manager.write_table_to_file("sellings-DEBUG.csv", selling_table)
 
 
 # print the default table of records from the file
@@ -43,9 +75,8 @@ def show_table(table):
 #
 # @table: list of lists
 def add(table):
-
-    # TODO:your code
-
+    new_id = ui.get_inputs(["id: ", "title: ", "price: ", "month: ", "day: ", "year: "], "Adding selling record")
+    table.append(new_id)
     return table
 
 
@@ -54,9 +85,10 @@ def add(table):
 # @table: list of lists
 # @id_: string
 def remove(table, id_):
-
-    # TODO:your code
-
+    for line in table:
+        if line[0] == id_:
+            table.remove(line)
+        ui.print_error_message(line)
     return table
 
 
