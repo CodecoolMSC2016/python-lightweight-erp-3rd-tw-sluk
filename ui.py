@@ -1,6 +1,7 @@
 
 import common
 import os
+import types
 
 
 def convert_table_items_to_string(table):
@@ -44,7 +45,7 @@ def get_column_widths(table, title_list):
 def print_table(table, title_list):
     """ Prints data in a nice spreadsheet-like format """
     formatted_table = table
-    formatted_table = convert_formatted_table_items_to_string(formatted_table)
+    formatted_table = convert_table_items_to_string(formatted_table)
     column_widths = get_column_widths(formatted_table, title_list)
     column_widths = [max(8, width + 2) for width in column_widths]  # setting min padding
 
@@ -71,11 +72,14 @@ def print_table(table, title_list):
 # @result: string or list or dictionary - result of the special function
 # @label: string - label of the result
 def print_result(result, label):
-
-    # TODO:your code
-
-    pass
-
+    if condition:
+        pass
+    elif condition:
+        pass
+    elif condition:
+        pass
+    else:
+        print("")
 
 # This function needs to generate outputs like this:
 # Main menu:
