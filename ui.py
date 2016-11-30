@@ -43,8 +43,9 @@ def get_column_widths(table, title_list):
 # @title_list: list of strings - the head of the table
 def print_table(table, title_list):
     """ Prints data in a nice spreadsheet-like format """
-    table = convert_table_items_to_string(table)
-    column_widths = get_column_widths(table, title_list)
+    formatted_table = table
+    formatted_table = convert_formatted_table_items_to_string(formatted_table)
+    column_widths = get_column_widths(formatted_table, title_list)
     column_widths = [max(8, width + 2) for width in column_widths]  # setting min padding
 
     dash_length = (common.custom_sum(column_widths) + len(column_widths) - 1)
@@ -55,14 +56,14 @@ def print_table(table, title_list):
         formatted_title_list[index] = formatted_title_list[index].center(column_widths[index])
     print("|" + "|".join(formatted_title_list) + "|")
 
-    for line in table:
+    for line in formatted_table:
         formatted_item_list = line
         for index in range(len(formatted_item_list)):
             formatted_item_list[index] = formatted_item_list[index].center(column_widths[index])
         print("|" + ("-" * dash_length) + "|")
         print("|" + "|".join(formatted_item_list) + "|")
     print("\\" + ("-" * dash_length) + "/")
-    input("Press any key to continue")
+    get_inputs(["Press enter to continue..."], "")
 
 
 # This function needs to print result of the special functions
