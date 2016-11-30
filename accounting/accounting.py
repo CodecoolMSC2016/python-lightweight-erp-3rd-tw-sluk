@@ -48,17 +48,17 @@ def start_module():
         elif option == "3":
             ID = ui.get_inputs(["Give an ID: "], "")
             if ID not in table:
-                print("Not existing ID")
+                ui.print_result("Not existing ID", "")
                 ui.get_inputs(["Press any key to continue..."], "")
             else:
                 update(table, ID[0])
         elif option == "4":
-            print(ui.print_result(which_year_max(table), ''), " has the highest profit")
+            ui.print_result("was the year of the highest profit ", which_year_max(table))
             ui.get_inputs(["Press any key to continue..."], "")
         elif option == "5":
             avg_year = ui.get_inputs(["Give a year, you want to check:"], "")
             result = avg_amount(table, avg_year[0])
-            print("The Average profit in ", int(avg_year[0]), "was", ui.print_result(result, ''))
+            ui.print_result("is the average profit of that year", result)
             ui.get_inputs(["Press any key to continue..."], "")
         elif option == "6":
             show_table(table)
@@ -97,9 +97,10 @@ def remove(table, id_):
     for i in table:
         if id_ in i[0]:
             table.remove(i)
-            print("Item successfully removed!")
-        else:
-            print("ID not found!")
+            ui.print_result('Item succesfully removed!', '')
+    if id_ != i[0]:
+        ui.print_result('ID not found!', '')
+    ui.get_inputs(["Press any key to continue..."], "")
     data_manager.write_table_to_file('accounting/items.csv', table)
     return table
 
@@ -160,7 +161,6 @@ def which_year_max(table):
 # the question: What is the average (per item) profit in a given year? [(profit)/(items count) ]
 # return the answer (number)
 def avg_amount(table, year):
-    print(table)
     avg = 0
     counter = 0
     for item in table:
