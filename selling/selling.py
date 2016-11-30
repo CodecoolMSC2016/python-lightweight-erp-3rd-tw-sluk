@@ -26,7 +26,7 @@ common = SourceFileLoader("common", current_file_path + "/../common.py").load_mo
 # we need to reach the default and the special functions of this module from the module menu
 #
 def start_module():
-    selling_table = common.read_csv("./selling/sellings.csv")
+    selling_table = data_manager.get_table_from_file("./selling/sellings.csv")
     show_table(selling_table)
 
 
