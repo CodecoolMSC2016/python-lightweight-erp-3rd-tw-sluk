@@ -27,7 +27,9 @@ common = SourceFileLoader("common", current_file_path + "/../common.py").load_mo
 #
 def start_module():
     selling_table = data_manager.get_table_from_file("./selling/sellings.csv")
+    print(selling_table)
     show_table(selling_table)
+    ui.get_inputs(["Press enter to continue..."], "")
 
 
 # print the default table of records from the file
