@@ -47,11 +47,7 @@ def start_module():
             remove(table, ID[0])
         elif option == "3":
             ID = ui.get_inputs(["Give an ID: "], "")
-            if ID not in table:
-                ui.print_result("Not existing ID", "")
-                ui.get_inputs(["Press any key to continue..."], "")
-            else:
-                update(table, ID[0])
+            update(table, ID[0])
         elif option == "4":
             ui.print_result("was the year of the highest profit ", which_year_max(table))
             ui.get_inputs(["Press any key to continue..."], "")
@@ -111,7 +107,6 @@ def remove(table, id_):
 # @table: list of lists
 # @id_: string
 def update(table, id_):
-
     for i in table:
         if id_ in i[0]:
             update_table = ["Month",
@@ -139,6 +134,9 @@ def update(table, id_):
                 i[5] = updating[0]
             elif option == "0":
                 break
+    if id_ not in i[0]:
+        ui.print_result("ID do not exist", "")
+        ui.get_inputs(["Press any key to continue..."], "")
     data_manager.write_table_to_file('accounting/items.csv', table)
     return table
 
