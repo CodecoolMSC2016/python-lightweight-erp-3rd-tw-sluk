@@ -72,14 +72,17 @@ def print_table(table, title_list):
 # @result: string or list or dictionary - result of the special function
 # @label: string - label of the result
 def print_result(result, label):
-    if condition:
+    if isinstance(result, str):
+        print(label, result)
+    elif isinstance(result, list):
         pass
-    elif condition:
-        pass
-    elif condition:
-        pass
+    elif isinstance(result, dict):
+        print(label)
+        for key, value in result.items():
+            print(key + ": " + value)
     else:
         print("")
+
 
 # This function needs to generate outputs like this:
 # Main menu:
