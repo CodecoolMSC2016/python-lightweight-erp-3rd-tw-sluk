@@ -124,14 +124,12 @@ def get_oldest_person(table):
     for name in table:
         if int(name[2]) == min:
             people.append(name[1])
-    print(people)
     return people
 
 
 # the question: Who is the closest to the average age ?
 # return type: list of strings (name or names if there are two more with the same value)
 def get_persons_closest_to_average(table):
-
     person_closest_average = []
     average = 0
     counter = 0
@@ -145,4 +143,4 @@ def get_persons_closest_to_average(table):
     for row in table:
         if difference == abs(int(row[2]) - average):
             person_closest_average.append(row[1])
-    return person_closest_average
+    return person_closest_average   
