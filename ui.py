@@ -6,10 +6,11 @@ import types
 
 def convert_table_items_to_string(table):
     """ Returns @table with it's items converted to string to ensure everything has length """
-    for line_index in range(len(table)):
-        for item_index in range(len(table[line_index])):
-            table[line_index][item_index] = str(table[line_index][item_index])
-    return table
+    table_string = [line[:] for line in table]
+    for line_index in range(len(table_string)):
+        for item_index in range(len(table_string[line_index])):
+            table_string[line_index][item_index] = str(table_string[line_index][item_index])
+    return table_string
 
 
 def get_max_item_length(item_list):
