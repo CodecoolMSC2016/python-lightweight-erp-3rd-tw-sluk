@@ -75,9 +75,11 @@ def show_table(table):
 #
 # @table: list of lists
 def add(table):
+    new_id = ui.get_inputs(["Give an ID: ", "Give a name", "Give an emeail:", "Subscribed?" ],
+    "Adding record")
 
-    # your code
-
+    table.append([new_id[0], new_id[1], new_id[2], new_id[3]])
+    data_manager.write_table_to_file('crm/customers.csv', table)
     return table
 
 
