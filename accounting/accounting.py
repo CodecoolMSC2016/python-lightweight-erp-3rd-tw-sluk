@@ -78,10 +78,8 @@ def add(table):
     new_id = ui.get_inputs(["Give a date (dd/mm/yyyy): ", "In/out: ", "Amount: "], "Adding record")
     account_date = common.parse_date(new_id[0])
 
-    new_record = [common.generate_random(table), account_date["month"], account_date["day"], account_date["year"],
-                  new_id[1], new_id[2]]
-    for i in new_record:
-        i = str(i)
+    new_record = [common.generate_random(table), str(account_date["month"]), str(account_date["day"]),
+                  str(account_date["year"]), new_id[1], new_id[2]]
     table.append(new_record)
     return table
 
