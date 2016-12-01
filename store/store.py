@@ -27,8 +27,8 @@ def start_module():
     store_table = ["Adding",
                    "Remove",
                    "Update",
-                   "Highest profit",
-                   "Avg profit",
+                   "Counting by manufacturers",
+                   "Avg stock per manufacturers",
                    "Pringting out"]
 
     table = data_manager.get_table_from_file("store/games.csv")
@@ -36,13 +36,33 @@ def start_module():
     while True:
         ui.print_menu("Store Manager", store_table, "Back to main menu")
         inputs = ui.get_inputs(["Please enter a number: "], "")
+        option = inputs[0]
+        if option == "1":
+            add(table)
+        elif option == "2":
+            ID = ui.get_inputs(["Give an ID: "], "")
+            remove(table, ID[0])
+        elif option == "3":
+            ID = ui.get_inputs(["Give an ID: "], "")
+            update(table, ID[0])
+        elif option == "4":
+            ui.print_result(get_counts_by_manufacturers(table), "(number of games by each manifacturers) ")
+        elif option == "5":
+            manufact = ui.get_inputs(["Which manufacturer you want to check: "], "")
+            result = get_average_by_manufacturer(table, manufact[0])
+            ui.print_result("is the average stock amount by this manufacturer", result)
+        elif option == "6":
+            show_table(table)
+        elif option == "0":
+            break
+
 
 
 # print the default table of records from the file
 #
 # @table: list of lists
 def show_table(table):
-    ui.print_table(table, ["ID", "Title", "Manufacturer", "Price", "In stock number", "Amount"])
+    ui.print_table(table, ["ID", "Title", "Manufacturer", "Price", "In stock number"])
 
 
 # Ask a new record as an input from the user than add it to @table, than return @table
@@ -50,10 +70,10 @@ def show_table(table):
 # @table: list of lists
 def add(table):
 
-    new_id = ui.get_inputs(["Give an ID: ", "Give a title: ", "Give a manufacturer: ", "Give a price: ",
-                            "Give stock number: ", "Amount: " ], "Adding record")
-
-    table.append([new_id[0], new_id[1], new_id[2], new_id[3], new_id[4], new_id[5]])
+    new_id = ui.get_inputs(["Give a title: ", "Give a manufacturer: ", "Give a price: ",
+                            "Give stock number: "], "Adding record")
+    id_generated = common.generate_random(table)
+    table.append([id_generated, new_id[0], new_id[1], new_id[2], new_id[3]])
     data_manager.write_table_to_file('store/games.csv', table)
     return table
 
@@ -70,7 +90,6 @@ def remove(table, id_):
             ui.print_result('Item succesfully removed!', '')
     if id_ != i[0]:
         ui.print_result('ID not found!', '')
-    ui.get_inputs(["Press any key to continue..."], "")
     data_manager.write_table_to_file('store/games.csv', table)
     return table
 
@@ -113,7 +132,7 @@ def update(table, id_):
     if id_ not in i[0]:
         ui.print_result("ID do not exist", "")
         ui.get_inputs(["Press any key to continue..."], "")
-    data_manager.write_table_to_file('accounting/items.csv', table)
+    data_manager.write_table_to_file('store/games.csv', table)
     return table
 
 
@@ -124,15 +143,26 @@ def update(table, id_):
 # return type: a dictionary with this structure: { [manufacturer] : [count] }
 def get_counts_by_manufacturers(table):
 
-    # your code
+    games_dic = {}
+    for game in range(len(table)):
+        if table[game][2] not in games_dic:
+            games_dic.update({table[game][2]: games_dic.get(table[game][2], 0) + 1})
+        else:
+            games_dic.update({table[game][2]: games_dic.get(table[game][2]) + 1})
 
-    pass
+    return games_dic
 
 
 # the question: What is the average amount of games in stock of a given manufacturer?
 # return type: number
 def get_average_by_manufacturer(table, manufacturer):
 
-    # your code
-
-    pass
+    total = 0.0
+    for game in range(len(table)):
+        if manufacturer == table[game][2]:
+            total += int(table[game][4])
+    counter = 0
+    for game in range(len(table)):
+        if manufacturer == table[game][2]:
+            counter += 1
+    return total / counter
