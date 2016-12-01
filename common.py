@@ -39,7 +39,8 @@ def custom_sum(int_list):
 
 
 def parse_date(date_string):
-    """ Parse date from 'dd/mm/yyy' or 'dd.mm.yyy' format (else raise ValueError), and return date as a dict """
+    """ Parse date from 'dd/mm/yyy' or 'dd.mm.yyy' format (else raise ValueError),
+        return date as {"year":int(), "month":int(), "day":int()} """
     if len(date_string.split('/')) == 3:
         sep = '/'
     elif len(date_string.split('.')) == 3:
