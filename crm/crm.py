@@ -22,10 +22,8 @@ common = SourceFileLoader("common", current_file_path + "/../common.py").load_mo
 # user need to go back to the main menu from here
 # we need to reach the default and the special functions of this module from the module menu
 #
-def start_module():
-
-    def start_module():
-        table = data_manager.get_table_from_file("cr/customers.csv")
+def start_module():    
+        table = data_manager.get_table_from_file("crm/customers.csv")
         while True:
             options = ["Print the table records",
                        "Add an item to the table",
@@ -69,10 +67,8 @@ def start_module():
 #
 # @table: list of lists
 def show_table(table):
-
-    # your code
-
-    pass
+    title_list = ["id", "name", "email", "subscribed"]
+    ui.print_table(data_manager.get_table_from_file("crm/customers.csv"), title_list)
 
 
 # Ask a new record as an input from the user than add it to @table, than return @table
