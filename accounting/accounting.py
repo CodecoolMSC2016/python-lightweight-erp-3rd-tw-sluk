@@ -26,14 +26,12 @@ common = SourceFileLoader("common", current_file_path + "/../common.py").load_mo
 # we need to reach the default and the special functions of this module from the module menu
 #
 def start_module():
-
-    account_table = ["Adding transaction",
+    account_table = ["Show account database",
+                     "Adding transaction",
                      "Removing transaction",
                      "Updating transaction",
                      "Highest profit",
-                     "Average profit",
-                     "Showing all transaction"]
-
+                     "Average profit"]
     table = data_manager.get_table_from_file("accounting/items.csv")
 
     while True:
@@ -41,22 +39,22 @@ def start_module():
         inputs = ui.get_inputs(["Please enter a number: "], "")
         option = inputs[0]
         if option == "1":
+            show_table(table)
+        elif option == "2":
             table = add(table)
             ui.print_result("", "Adding successful")
-        elif option == "2":
+        elif option == "3":
             ID = ui.get_inputs(["ID: "], "Removing transaction")
             table = remove(table, ID[0])
-        elif option == "3":
+        elif option == "4":
             ID = ui.get_inputs(["ID: "], "Updating transaction")
             update(table, ID[0])
-        elif option == "4":
-            ui.print_result(which_year_max(table), "Most profitable year: ")
         elif option == "5":
+            ui.print_result(which_year_max(table), "Most profitable year: ")
+        elif option == "6":
             avg_year = ui.get_inputs(["Year: "], "")
             result = str(avg_amount(table, avg_year[0]))
             ui.print_result(result, "Most average year in profit: ")
-        elif option == "6":
-            show_table(table)
         elif option == "0":
             break
     data_manager.write_table_to_file('accounting/items.csv', table)
