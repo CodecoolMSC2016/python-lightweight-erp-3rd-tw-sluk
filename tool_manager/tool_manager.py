@@ -50,10 +50,10 @@ def start_module():
             update(table, ID[0])
         elif option == "5":
             result = str(get_available_tools(table))
-            ui.print_result(result, "These are not exceeded tools")
+            ui.print_result(result, "These are not exceeded tools: ")
         elif option == "6":
             result = str(get_average_durability_by_manufacturers(table))
-            ui.print_result("is the average stock amount manufacturer", result)
+            ui.print_result("is the average stock amount by manufacturer", result)
         elif option == "0":
             break
 
@@ -76,7 +76,7 @@ def add(table):
     new_id = ui.get_inputs(["Give a name: ", "Give a manufacturer: ", "Give a purchase date (year): ",
                             "Give durability (in years): "], "Adding record")
     id_generated = common.generate_random(table)
-    table.append([id_generated, new_id[0], new_id[1], str(new_id[2]), str(new_id[3])])
+    table.append([id_generated, str(new_id[0]), str(new_id[1]), str(new_id[2]), str(new_id[3])])
     return table
 
 
@@ -143,10 +143,8 @@ def get_available_tools(table):
     now = datetime.datetime.now()
 
     for tool in range(len(table)):
-        table[tool][3] = int(table[tool][3])
-        table[tool][4] = int(table[tool][4])
         if int(table[tool][3]) + int(table[tool][4]) > int(now.year):
-            need = table[tool][0], table[tool][1], table[tool][2], int(table[tool][3]), int(table[tool][4])
+            need = table[tool][0], table[tool][1], table[tool][2], table[tool][3], table[tool][4]
             tools.append(need)
     return tools
 
