@@ -73,6 +73,7 @@ def print_table(table, title_list):
 # @result: string or list or dictionary - result of the special function
 # @label: string - label of the result
 def print_result(result, label):
+    print()
     if isinstance(result, str):
         print(label, result)
     elif isinstance(result, list):
@@ -120,7 +121,7 @@ def get_inputs(list_labels, title):
     inputs = []
     print(title)
     for label in list_labels:
-        inputs.append(input(label))
+        inputs.append(input("  " + label))
     return inputs
 
 
