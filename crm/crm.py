@@ -111,15 +111,36 @@ def update(table, id_):
         table[row] = new_data
     return table
 
-
 # special functions:
 # ------------------
 # the question: What is the id of the customer with the longest name ?
 # return type: string (id) - if there are more than one longest name, return the first of descending alphabetical order
 def get_longest_name_id(table):
-
+    name = []
+    name_lenght = len(table[0][1])
+    for item in table:
+        if len(item[1]) == name_lenght:
+            name.append(item[1])
+        for num in range(len(name) - 1, 0, -1):
+         for i in range(num):
+            if name[i] > name[i + 1]:
+                temp = name[i]
+                name[i] = name[i + 1]
+                name[i + 1] = temp
+    for line in table:
+        if name[0] == line[1]:
+            return (line[0])
 
 
 # the question: Which customers has subscribed to the newsletter?
 # return type: list of string (where string is like email+separator+name, separator=";")
 def get_subscribed_emails(table):
+        list_subscribed = []
+        for row in table:
+            subscribed = row[3]
+        if subscribed == "1":
+            email = row[2]
+            name = row[1]
+            result_row = email + ";" + name
+            list_subscribed.append(result_row)
+        return list_subscribed
