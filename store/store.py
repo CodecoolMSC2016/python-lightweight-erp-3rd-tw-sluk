@@ -80,12 +80,12 @@ def add(table):
 # @table: list of lists
 # @id_: string
 def remove(table, id_):
-    if id_ != i[0]:
-        ui.print_error_message('ID not found!')
     for i in table:
         if id_ in i[0]:
             table.remove(i)
             ui.print_result('Item succesfully removed!', '')
+    if id_ != i[0]:
+        ui.print_error_message('ID not found!')
     return table
 
 
