@@ -24,12 +24,12 @@ common = SourceFileLoader("common", current_file_path + "/../common.py").load_mo
 # we need to reach the default and the special functions of this module from the module menu
 #
 def start_module():
-    store_table = ["Add game",
+    store_table = ["Show store database"
+                   "Add game",
                    "Remove game",
                    "Update game",
                    "Count games by manufacturers",
-                   "Average games in stock by manufacturers",
-                   "Printing out"]
+                   "Average games in stock by manufacturers"]
     table = data_manager.get_table_from_file("store/games.csv")
 
     while True:
@@ -37,21 +37,21 @@ def start_module():
         inputs = ui.get_inputs(["Please enter a number: "], "")
         option = inputs[0]
         if option == "1":
-            add(table)
+            show_table(table)
         elif option == "2":
-            ID = ui.get_inputs(["ID: "], "")
-            remove(table, ID[0])
+            add(table)
         elif option == "3":
             ID = ui.get_inputs(["ID: "], "")
-            update(table, ID[0])
+            remove(table, ID[0])
         elif option == "4":
-            ui.print_result(get_counts_by_manufacturers(table), "(number of games by each manifacturers) ")
+            ID = ui.get_inputs(["ID: "], "")
+            update(table, ID[0])
         elif option == "5":
+            ui.print_result(get_counts_by_manufacturers(table), "(number of games by each manifacturers) ")
+        elif option == "6":
             manufact = ui.get_inputs(["Which manufacturer you want to check: "], "")
             result = get_average_by_manufacturer(table, manufact[0])
             ui.print_result(result, "is the average stock amount by this manufacturer")
-        elif option == "6":
-            show_table(table)
         elif option == "0":
             break
     data_manager.write_table_to_file('store/games.csv', table)
