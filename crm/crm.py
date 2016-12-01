@@ -21,7 +21,6 @@ common = SourceFileLoader("common", current_file_path + "/../common.py").load_mo
 # start this module by a module menu like the main menu
 # user need to go back to the main menu from here
 # we need to reach the default and the special functions of this module from the module menu
-#
 def start_module():
         table = data_manager.get_table_from_file("crm/customers.csv")
         while True:
@@ -88,9 +87,11 @@ def add(table):
 # @table: list of lists
 # @id_: string
 def remove(table, id_):
-
-    # your code
-
+    user_id = str(id_[0])
+    for row in table:
+      original_id = row[0]
+      if original_id == user_id:
+          table.remove(row)
     return table
 
 
@@ -100,29 +101,25 @@ def remove(table, id_):
 # @table: list of lists
 # @id_: string
 def update(table, id_):
-
-    # your code
-
+    list_labels = ["name", "birthdate"]
+    user_id = str(id_[0])
+    for row in range(len(table)):
+        original_id = table[row][0]
+    if original_id == user_id:
+        new_data = ui.get_inputs(list_labels, "Update data")
+        new_data.insert(0, user_id)
+        table[row] = new_data
     return table
 
 
 # special functions:
 # ------------------
-
-
 # the question: What is the id of the customer with the longest name ?
 # return type: string (id) - if there are more than one longest name, return the first of descending alphabetical order
 def get_longest_name_id(table):
 
-    # your code
-
-    pass
 
 
 # the question: Which customers has subscribed to the newsletter?
 # return type: list of string (where string is like email+separator+name, separator=";")
 def get_subscribed_emails(table):
-
-    # your code
-
-    pass
