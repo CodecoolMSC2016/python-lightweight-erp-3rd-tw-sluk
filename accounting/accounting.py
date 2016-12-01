@@ -42,18 +42,19 @@ def start_module():
         option = inputs[0]
         if option == "1":
             table = add(table)
+            ui.print_result("", "Adding successful")
         elif option == "2":
-            ID = ui.get_inputs(["Give an ID: "], "")
+            ID = ui.get_inputs(["ID: "], "Removing transaction")
             table = remove(table, ID[0])
         elif option == "3":
-            ID = ui.get_inputs(["Give an ID: "], "")
+            ID = ui.get_inputs(["ID: "], "Updating transaction")
             update(table, ID[0])
         elif option == "4":
-            ui.print_result("was the year of the highest profit ", which_year_max(table))
+            ui.print_result(which_year_max(table), "Most profitable year: ")
         elif option == "5":
-            avg_year = ui.get_inputs(["Give a year, you want to check:"], "")
-            result = avg_amount(table, avg_year[0])
-            ui.print_result("is the average profit of that year", result)
+            avg_year = ui.get_inputs(["Year: "], "")
+            result = str(avg_amount(table, avg_year[0]))
+            ui.print_result(result, "Most average year in profit: ")
         elif option == "6":
             show_table(table)
         elif option == "0":
@@ -65,19 +66,24 @@ def start_module():
 #
 # @table: list of lists
 def show_table(table):
-    ui.print_table(table, ["ID", "Month", "Day", "Year", "In/out", "Amount"])
+    ui.print_table(table, ["ID", "Month", "Day", "Year", "in/out", "Amount"])
 
 
 # Ask a new record as an input from the user than add it to @table, than return @table
 #
 # @table: list of lists
 def add(table):
-
-    new_id = ui.get_inputs(["Date (dd/mm/yyyy): ", "In/out: ", "Amount: "], "Adding record")
-    account_date = common.parse_date(new_id[0])
-
-    new_record = [common.generate_random(table), str(account_date["month"]), str(account_date["day"]),
-                  str(account_date["year"]), new_id[1], new_id[2]]
+    while True:
+        try:
+            transaction_date = ui.get_inputs(["Date (dd/mm/yyyy): "], "Adding record")
+            transaction_date = common.parse_date(transaction_date[0])
+        except ValueError as e:
+            ui.print_result("", "Invalid date format")
+        else:
+            break
+    new_id = ui.get_inputs(["in/out: ", "Amount: "], "")
+    new_record = [common.generate_random(table), str(transaction_date["month"]), str(transaction_date["day"]),
+                  str(transaction_date["year"]), new_id[0], new_id[1]]
     table.append(new_record)
     return table
 
@@ -91,7 +97,7 @@ def remove(table, id_):
     for i in table:
         if id_ in i[0]:
             table.remove(i)
-            ui.print_result('Item succesfully removed!', '')
+            ui.print_result('Transaction succesfully removed!', '')
     if id_ != i[0]:
         ui.print_error_message('ID not found!')
     return table
@@ -113,24 +119,21 @@ def update(table, id_):
             ui.print_menu("What do you want to change?", update_table, "Back to accounting menu")
             inputs = ui.get_inputs(["Please enter a number: "], "")
             option = inputs[0]
+            if option == "0":
+                break
+            updating = ui.get_inputs(["ID: "], "")
             if option == "1":
-                updating = ui.get_inputs(["Write in the record:"], "")
                 i[1] = str(i[1])
                 i[1] = updating[0]
             elif option == "2":
-                updating = ui.get_inputs(["Write in the record:"], "")
                 i[2] = updating[0]
             elif option == "3":
-                updating = ui.get_inputs(["Write in the record:"], "")
                 i[3] = updating[0]
             elif option == "4":
-                updating = ui.get_inputs(["Write in the record:"], "")
                 i[4] = updating[0]
             elif option == "5":
-                updating = ui.get_inputs(["Write in the record:"], "")
                 i[5] = updating[0]
-            elif option == "0":
-                break
+            ui.print_result('Transaction succesfully updated!', '')
     if id_ not in i[0]:
         ui.print_error_message("ID do not exist")
     return table
