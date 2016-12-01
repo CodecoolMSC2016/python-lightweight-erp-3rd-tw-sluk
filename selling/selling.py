@@ -37,16 +37,16 @@ def start_module():
         ui.print_menu("Selling", selling_menu, "Save and back to main menu")
         inputs = ui.get_inputs(["Please enter a number: "], "")
         option = inputs[0]
-        if option == "1":  # Show table
+        if option == "1":
             show_table(selling_table)
-        elif option == "2":  # Add selling
+        elif option == "2":
             selling_table = add(selling_table)
-        elif option == "3":  # Remove selling
+        elif option == "3":
             input_string = ui.get_inputs(["ID: "], "Remove selling")
             if input_string:
                 ID = input_string[0]
                 selling_table = remove(selling_table, ID)
-        elif option == "4":  # Update selling
+        elif option == "4":
             input_string = ui.get_inputs(["ID: "], "Update selling")
             if input_string:
                 ID = input_string[0]
@@ -54,13 +54,13 @@ def start_module():
                     update(selling_table, ID)
                 else:
                     ui.print_error_message("Not existing ID")
-        elif option == "5":  # lowest price
+        elif option == "5":
             ui.print_result(get_lowest_price_item_id(selling_table), "Lowest priced item's ID:")
-        elif option == "6":  # sold between
+        elif option == "6":
             pass
         elif option == "0":
             break
-    data_manager.write_table_to_file("sellings-DEBUG.csv", selling_table)
+    data_manager.write_table_to_file("sellings.csv", selling_table)
 
 
 # print the default table of records from the file
@@ -101,9 +101,30 @@ def remove(table, id_):
 # @table: list of lists
 # @id_: string
 def update(table, id_):
-
-    # TODO:your code
-
+    for i in table:
+        if id_ in i[0]:
+            update_table = ["Title",
+                            "Price",
+                            "Date"]
+            ui.print_menu("What do you want to change?", update_table, "Back to store menu")
+            inputs = ui.get_inputs(["Please enter a number: "], "")
+            option = inputs[0]
+            if option == "0":
+                break
+            updating = ui.get_inputs([update_table[int(option) - 1] + ": "], "")
+            if option == "1":
+                i[1] = updating[0]
+            elif option == "2":
+                i[2] = updating[0]
+            elif option == "3":
+                date_string = updating[0]
+                date_dict = common.parse_date(date_string)
+                i[3] = date_dict["month"]
+                i[4] = date_dict["day"]
+                i[5] = date_dict["year"]
+            ui.print_result('Game selling data updated!', '')
+    if id_ not in i[0]:
+        ui.print_error_message("ID do not exist")
     return table
 
 
