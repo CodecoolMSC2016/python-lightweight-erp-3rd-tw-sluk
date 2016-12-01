@@ -121,7 +121,7 @@ def update(table, id_):
             option = inputs[0]
             if option == "0":
                 break
-            updating = ui.get_inputs(["ID: "], "")
+            updating = ui.get_inputs([update_table[int(option) - 1] + ": "], "")
             if option == "1":
                 i[1] = str(i[1])
                 i[1] = updating[0]
