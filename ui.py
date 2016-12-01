@@ -44,7 +44,7 @@ def get_column_widths(table, title_list):
 # @title_list: list of strings - the head of the table
 def print_table(table, title_list):
     """ Prints data in a nice spreadsheet-like format """
-    formatted_table = table
+    formatted_table = [line[:] for line in table]
     formatted_table = convert_table_items_to_string(formatted_table)
     column_widths = get_column_widths(formatted_table, title_list)
     column_widths = [max(8, width + 2) for width in column_widths]  # setting min padding
@@ -82,6 +82,7 @@ def print_result(result, label):
             print(key + ": " + value)
     else:
         print("")
+    get_inputs(["Press enter to continue..."], "")
 
 
 # This function needs to generate outputs like this:

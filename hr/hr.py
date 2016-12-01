@@ -89,8 +89,7 @@ def remove(table, id_):
         original_id = row[1]
         if original_id == user_id:
             table.remove(row)
-        return table
-
+    return table
 
 
 # Update the record in @table having the id @id_ by asking the new data from the user,
