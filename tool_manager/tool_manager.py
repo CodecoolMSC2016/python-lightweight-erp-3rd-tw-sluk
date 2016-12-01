@@ -41,13 +41,13 @@ def start_module():
         if option == "1":
             show_table(table)
         elif option == "2":
-            add(table)
+            table = add(table)
         elif option == "3":
             ID = ui.get_inputs(["Give an ID: "], "")
-            remove(table, ID[0])
+            table = remove(table, ID[0])
         elif option == "4":
             ID = ui.get_inputs(["Give an ID: "], "")
-            update(table, ID[0])
+            table = update(table, ID[0])
         elif option == "5":
             result = str(get_available_tools(table))
             ui.print_result(result, "These are not exceeded tools: ")
