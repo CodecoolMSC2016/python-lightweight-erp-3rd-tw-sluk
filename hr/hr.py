@@ -29,7 +29,7 @@ def start_module():
                    "Remove from table",
                    "Update an item in the table",
                    "Who is the oldest person?",
-                   "Who is the closest to the average age y?"]
+                   "Who is the closest to the average age year?"]
 
         ui.print_menu("Human Resources", options, "Back")
         inputs = ui.get_inputs(["Please enter a number: "], "")
@@ -124,12 +124,14 @@ def get_oldest_person(table):
     for name in table:
         if int(name[2]) == min:
             people.append(name[1])
+    print(people)
     return people
 
 
 # the question: Who is the closest to the average age ?
 # return type: list of strings (name or names if there are two more with the same value)
 def get_persons_closest_to_average(table):
+
     person_closest_average = []
     average = 0
     counter = 0
