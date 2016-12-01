@@ -23,29 +23,63 @@ common = SourceFileLoader("common", current_file_path + "/../common.py").load_mo
 # we need to reach the default and the special functions of this module from the module menu
 #
 def start_module():
+        table = data_manager.get_table_from_file("crm/customers.csv")
+        while True:
+            options = ["Print the table records",
+                       "Add an item to the table",
+                       "Remove from table",
+                       "Update an item in the table",
+                       "Who is the customer with the longest name?",
+                       "Who subscribed to emails?"]
 
-    # you code
+            ui.print_menu("Customer Relationship Management", options, "Back")
+            inputs = ui.get_inputs(["Please enter a number: "], "")
+            option = inputs[0]
+            if option == "1":
+                show_table(table)
+            elif option == "2":
+                add(table)
+                data_manager.write_table_to_file("crm/customers.csv", table)
+            elif option == "3":
+                id_ = ui.get_inputs(["Please enter an ID to remove: "], "")
+                remove(table, id_)
+                data_manager.write_table_to_file("crm/customers.csv", table)
+            elif option == "4":
+                id_ = ui.get_inputs(["Please enter an ID to update: "], "")
+                update(table, id_)
+                data_manager.write_table_to_file("crm/customers.csv", table)
+            elif option == "5":
+                label = "The longest customer name id is:"
+                result = get_longest_name_id(table)
+                ui.print_result(result, label)
+            elif option == "6":
+                label = "Customers, who subscribed  emails"
+                result = get_subscribed_emails(table)
+                ui.print_result(result, label)
+            elif option == "0":
+                break
+            else:
+                raise KeyError("There is no such option.")
 
-    pass
 
 
 # print the default table of records from the file
 #
 # @table: list of lists
 def show_table(table):
-
-    # your code
-
-    pass
+    title_list = ["id", "name", "email", "subscribed"]
+    ui.print_table(data_manager.get_table_from_file("crm/customers.csv"), title_list)
 
 
 # Ask a new record as an input from the user than add it to @table, than return @table
 #
 # @table: list of lists
 def add(table):
+    new_id = ui.get_inputs(["Give an ID: ", "Give a name", "Give an emeail:", "Subscribed?" ],
+    "Adding record")
 
-    # your code
-
+    table.append([new_id[0], new_id[1], new_id[2], new_id[3]])
+    data_manager.write_table_to_file('crm/customers.csv', table)
     return table
 
 

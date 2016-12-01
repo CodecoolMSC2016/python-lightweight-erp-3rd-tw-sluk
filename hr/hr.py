@@ -73,25 +73,22 @@ def show_table(table):
 #
 # @table: list of lists
 def add(table):
-    new_id = ui.get_inputs(["Give an ID: ", "Give a name", "Give a birthday: "],
-                           "Adding record")
+    new_id = ui.get_inputs(["Give an ID: ", "Give a name", "Give a birthday: ", ],
+    "Adding record")
 
-    table.append([new_id[0], new_id[1], new_id[2]])
+    table.append([new_id[0], new_id[1], new_id[2],])
     data_manager.write_table_to_file('hr/persons.csv', table)
     return table
-
-
 # Remove the record having the id @id_ from the @list, than return @table
 #
 # @table: list of lists
 # @id_: string
 def remove(table, id_):
-    name_id = str(id_[1])
-    for row in table:
-        original_id = row[1]
+      user_id = str(id_[0])
+      for row in table:
+        original_id = row[0]
         if original_id == user_id:
             table.remove(row)
-    return table
 
 
 # Update the record in @table having the id @id_ by asking the new data from the user,
@@ -126,14 +123,12 @@ def get_oldest_person(table):
     for name in table:
         if int(name[2]) == min:
             people.append(name[1])
-    print(people)
     return people
 
 
 # the question: Who is the closest to the average age ?
 # return type: list of strings (name or names if there are two more with the same value)
 def get_persons_closest_to_average(table):
-
     person_closest_average = []
     average = 0
     counter = 0
