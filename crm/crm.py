@@ -55,7 +55,7 @@ def start_module():
                 result = get_longest_name_id(table)
                 ui.print_result(result, label)
             elif option == "6":
-                label = "Customers, who subscribedemails"
+                label = "Customers, who subscribed  emails"
                 result = get_subscribed_emails(table)
                 ui.print_result(result, label)
             elif option == "0":

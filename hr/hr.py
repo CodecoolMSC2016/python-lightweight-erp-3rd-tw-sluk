@@ -143,4 +143,4 @@ def get_persons_closest_to_average(table):
     for row in table:
         if difference == abs(int(row[2]) - average):
             person_closest_average.append(row[1])
-    return person_closest_average   
+    return person_closest_average
