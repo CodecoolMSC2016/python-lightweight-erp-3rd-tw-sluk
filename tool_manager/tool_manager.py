@@ -50,11 +50,12 @@ def start_module():
             ui.print_result(get_available_tools(table), "These are not exceeded tools")
         elif option == "5":
             result = get_average_durability_by_manufacturers(table)
-            ui.print_result("is the average stock amount by this manufacturer", result)
+            ui.print_result("is the average stock amount manufacturer", result)
         elif option == "6":
             show_table(table)
         elif option == "0":
             break
+
     data_manager.write_table_to_file('tool_manager/tools.csv', table)
     pass
 
@@ -74,7 +75,7 @@ def add(table):
     new_id = ui.get_inputs(["Give a name: ", "Give a manufacturer: ", "Give a purchase date (year): ",
                             "Give durability (in years): "], "Adding record")
     id_generated = common.generate_random(table)
-    table.append([id_generated, new_id[0], new_id[1], new_id[2], new_id[3]])
+    table.append([id_generated, new_id[0], new_id[1], str(new_id[2]), str(new_id[3])])
     return table
 
 
@@ -89,7 +90,7 @@ def remove(table, id_):
             table.remove(i)
             ui.print_result('Item succesfully removed!', '')
     if id_ != i[0]:
-        ui.print_result('ID not found!', '')
+        ui.print_error_message("ID do not exist")
     return table
 
 
@@ -124,7 +125,7 @@ def update(table, id_):
             elif option == "0":
                 break
     if id_ not in i[0]:
-        ui.print_result("ID do not exist", "")
+        ui.print_error_message("ID do not exist")
     return table
 
 
@@ -143,8 +144,9 @@ def get_available_tools(table):
     for tool in range(len(table)):
         table[tool][3] = int(table[tool][3])
         table[tool][4] = int(table[tool][4])
-        if table[tool][3] + table[tool][4] > int(now.year):
-            tools.append(table[tool])
+        if int(table[tool][3]) + int(table[tool][4]) > int(now.year):
+            need = table[tool][0], table[tool][1], table[tool][2], int(table[tool][3]), int(table[tool][4])
+            tools.append(need)
     return tools
 
 
@@ -153,10 +155,19 @@ def get_available_tools(table):
 #
 # @table: list of lists
 def get_average_durability_by_manufacturers(table):
-
     avg = {}
     for tool in range(len(table)):
-        if table[tool][2] not in avg:
-
-
+        total = 0
+        result = 0
+        counter = 0
+        manufacture = table[tool][2]
+        for tool in range(len(table)):
+            manufacture2 = table[tool][2]
+            durab = int(table[tool][4])
+            if manufacture == manufacture2:
+                total += durab
+                counter += 1
+        average = total / counter
+        avg.update({manufacture: average})
+    return avg
     pass
