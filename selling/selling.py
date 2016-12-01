@@ -37,28 +37,27 @@ def start_module():
         ui.print_menu("Selling", selling_menu, "Save and back to main menu")
         inputs = ui.get_inputs(["Please enter a number: "], "")
         option = inputs[0]
-        if option == "1":
+        if option == "1":  # Show table
             show_table(selling_table)
-        elif option == "2":
+        elif option == "2":  # Add selling
             selling_table = add(selling_table)
-        elif option == "3":
-            input_string = ui.get_inputs(["Give an ID: "], "")
-            ID = input_string[0]
-            selling_table = remove(selling_table, ID)
-        elif option == "4":
-            input_string = ui.get_inputs(["Give an ID: "], "")
-            ID = input_string[0]
-            if ID in table:
-                update(selling_table, ID)
-            else:
-                ui.print_error_message("Not existing ID")
-        elif option == "5":
+        elif option == "3":  # Remove selling
+            input_string = ui.get_inputs(["ID: "], "Remove selling")
+            if input_string:
+                ID = input_string[0]
+                selling_table = remove(selling_table, ID)
+        elif option == "4":  # Update selling
+            input_string = ui.get_inputs(["ID: "], "Update selling")
+            if input_string:
+                ID = input_string[0]
+                if ID in table:
+                    update(selling_table, ID)
+                else:
+                    ui.print_error_message("Not existing ID")
+        elif option == "5":  # lowest price
             ui.print_result(get_lowest_price_item_id(selling_table), "Lowest priced item's ID:")
-        elif option == "6":
-            avg_year = ui.get_inputs(["Give a year, you want to check:"], "")
-            result = avg_amount(table, avg_year[0])
-            print("The Average profit in ", int(avg_year[0]), "was", ui.print_result(result, ''))
-            ui.get_inputs(["Press any key to continue..."], "")
+        elif option == "6":  # sold between
+            pass
         elif option == "0":
             break
     data_manager.write_table_to_file("sellings-DEBUG.csv", selling_table)
@@ -75,8 +74,12 @@ def show_table(table):
 #
 # @table: list of lists
 def add(table):
-    new_id = ui.get_inputs(["id: ", "title: ", "price: ", "month: ", "day: ", "year: "], "Adding selling record")
-    table.append(new_id)
+    # id, title, price, month, day, year
+    adding_inputs = ui.get_inputs(["title: ", "price: ", "date (dd/mm/yyyy): "], "Adding selling record")
+    selling_date = common.parse_date(adding_inputs[2])
+    new_record = [common.generate_random(table), adding_inputs[0], adding_inputs[1],
+                  selling_date["day"], selling_date["month"], selling_date["year"]]
+    table.append(new_record)
     return table
 
 
