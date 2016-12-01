@@ -50,17 +50,15 @@ def start_module():
             update(table, ID[0])
         elif option == "4":
             ui.print_result("was the year of the highest profit ", which_year_max(table))
-            ui.get_inputs(["Press any key to continue..."], "")
         elif option == "5":
             avg_year = ui.get_inputs(["Give a year, you want to check:"], "")
             result = avg_amount(table, avg_year[0])
             ui.print_result("is the average profit of that year", result)
-            ui.get_inputs(["Press any key to continue..."], "")
         elif option == "6":
             show_table(table)
         elif option == "0":
             break
-
+    data_manager.write_table_to_file('accounting/items.csv', table)
     pass
 
 
@@ -68,6 +66,7 @@ def start_module():
 #
 # @table: list of lists
 def show_table(table):
+    print(table)
     ui.print_table(table, ["ID", "Month", "Day", "Year", "In/out", "Amount"])
 
 
@@ -76,11 +75,12 @@ def show_table(table):
 # @table: list of lists
 def add(table):
 
-    new_id = ui.get_inputs(["Give an ID: ", "Give a month: ", "Give a day: ", "Give a year: ",
-                            "In or out(come): ", "Amount: " ], "Adding record")
+    new_id = ui.get_inputs(["Give a date (dd/mm/yyyy): ", "In/out: ", "Amount: "], "Adding record")
+    account_date = common.parse_date(new_id[0])
 
-    table.append([new_id[0], new_id[1], new_id[2], new_id[3], new_id[4], new_id[5]])
-    data_manager.write_table_to_file('accounting/items.csv', table)
+    new_record = [common.generate_random(table), str(account_date["month"]), str(account_date["day"]),
+                  str(account_date["year"]), new_id[1], new_id[2]]
+    table.append(new_record)
     return table
 
 
@@ -96,8 +96,6 @@ def remove(table, id_):
             ui.print_result('Item succesfully removed!', '')
     if id_ != i[0]:
         ui.print_result('ID not found!', '')
-    ui.get_inputs(["Press any key to continue..."], "")
-    data_manager.write_table_to_file('accounting/items.csv', table)
     return table
 
 
@@ -119,6 +117,7 @@ def update(table, id_):
             option = inputs[0]
             if option == "1":
                 updating = ui.get_inputs(["Write in the record:"], "")
+                i[1] = str(i[1])
                 i[1] = updating[0]
             elif option == "2":
                 updating = ui.get_inputs(["Write in the record:"], "")
@@ -136,8 +135,6 @@ def update(table, id_):
                 break
     if id_ not in i[0]:
         ui.print_result("ID do not exist", "")
-        ui.get_inputs(["Press any key to continue..."], "")
-    data_manager.write_table_to_file('accounting/items.csv', table)
     return table
 
 
