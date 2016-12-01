@@ -100,7 +100,7 @@ def remove(table, id_):
 # @table: list of lists
 # @id_: string
 def update(table, id_):
-    list_labels = ["id: ", "name: ", "email: ", "subscribed? "]
+    list_labels = ["ID: ", "Name: ", "Email: ", "Subscribe: "]
     id_ = str(id_[0])
     for row in range(len(table)):
         original_id = table[row][0]
