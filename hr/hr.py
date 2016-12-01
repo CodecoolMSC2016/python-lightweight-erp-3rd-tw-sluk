@@ -40,10 +40,12 @@ def start_module():
             table = add(table)
         elif option == "3":
             id_ = ui.get_inputs(["Please enter an ID to remove: "], "")
-            table = remove(table, id_[0])
+            table = remove(table, id_)
+            data_manager.write_table_to_file("hr/persons.csv", table)
         elif option == "4":
             id_ = ui.get_inputs(["Please enter an ID to update: "], "")
-            table = update(table, id_[0])
+            table = update(table, id_)
+            data_manager.write_table_to_file("hr/persons.csv", table)
         elif option == "5":
             label = "The oldest person is:"
             result = get_oldest_person(table)
@@ -65,6 +67,7 @@ def show_table(table):
     ui.print_table(data_manager.get_table_from_file("hr/persons.csv"), title_list)
 
 
+
 # Ask a new record as an input from the user than add it to @table, than return @table
 #
 # @table: list of lists
@@ -81,12 +84,11 @@ def add(table):
 # @table: list of lists
 # @id_: string
 def remove(table, id_):
-    if id_ != i[0]:
-        ui.print_error_message('ID not found!')
+    id_ = str(id_[0])
     for row in table:
-        if id_ in row:
-            table.remove(row)
-            ui.print_result('Item succesfully removed!', '')
+      original_id = row[0]
+      if original_id == id_:
+          table.remove(row)
     return table
 
 
@@ -104,7 +106,7 @@ def update(table, id_):
             new_data = ui.get_inputs(list_labels, "Update data")
             new_data.insert(0, user_id)
             table[row] = new_data
-            return table
+    return table
 
 
 # special functions:
@@ -128,17 +130,30 @@ def get_oldest_person(table):
 # the question: Who is the closest to the average age ?
 # return type: list of strings (name or names if there are two more with the same value)
 def get_persons_closest_to_average(table):
-    person_closest_average = []
-    average = 0
-    counter = 0
+    checker = 0
+    sum_of_ages = 0
+    current_year = 2016
     for row in table:
-        average += int(row[2])
-        counter += 1
-    average = average / counter
-    difference = 9999
-    if abs(int(row[2]) - average) < difference:
-        difference = abs(int(row[2]) - average)
+        born_year = int(row[2])
+        sum_of_ages += current_year - born_year
+        checker += 1
+    average_age = sum_of_ages / checker
+    min_age = 200
+    list_of_names = []
     for row in table:
-        if difference == abs(int(row[2]) - average):
-            person_closest_average.append(row[1])
-    return person_closest_average
+        born_year = int(row[2])
+        result = (current_year - born_year) - average_age
+        if result < 0:
+            result *= -1
+        if result < min_age:
+            min_age = result
+    for row in table:
+        born_year = int(row[2])
+        name = row[1]
+        result = (current_year - born_year) - average_age
+        if result < 0:
+            result *= -1
+        if result == min_age:
+            if row not in list_of_names:
+                list_of_names.append(name)
+    return list_of_names

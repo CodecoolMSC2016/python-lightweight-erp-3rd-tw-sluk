@@ -21,7 +21,6 @@ common = SourceFileLoader("common", current_file_path + "/../common.py").load_mo
 # start this module by a module menu like the main menu
 # user need to go back to the main menu from here
 # we need to reach the default and the special functions of this module from the module menu
-#
 def start_module():
         table = data_manager.get_table_from_file("crm/customers.csv")
         while True:
@@ -62,7 +61,6 @@ def start_module():
                 raise KeyError("There is no such option.")
 
 
-
 # print the default table of records from the file
 #
 # @table: list of lists
@@ -75,7 +73,7 @@ def show_table(table):
 #
 # @table: list of lists
 def add(table):
-    new_id = ui.get_inputs(["Give an ID: ", "Give a name", "Give an emeail:", "Subscribed?" ],
+    new_id = ui.get_inputs(["Give an ID: ", "Give a name: ", "Give an email: ", "Subscribed? " ],
     "Adding record")
 
     table.append([new_id[0], new_id[1], new_id[2], new_id[3]])
@@ -88,9 +86,11 @@ def add(table):
 # @table: list of lists
 # @id_: string
 def remove(table, id_):
-
-    # your code
-
+    id_ = str(id_[0])
+    for row in table:
+      original_id = row[0]
+      if original_id == id_:
+          table.remove(row)
     return table
 
 
@@ -100,29 +100,47 @@ def remove(table, id_):
 # @table: list of lists
 # @id_: string
 def update(table, id_):
-
-    # your code
-
+    list_labels = ["id: ", "name: ", "email: ", "subscribed? "]
+    id_ = str(id_[0])
+    for row in range(len(table)):
+        original_id = table[row][0]
+    if original_id == id_:
+        new_data = ui.get_inputs(list_labels, "Update data")
+        new_data.insert(0, id_)
+        table[row] = new_data
     return table
 
 
 # special functions:
 # ------------------
-
-
 # the question: What is the id of the customer with the longest name ?
 # return type: string (id) - if there are more than one longest name, return the first of descending alphabetical order
 def get_longest_name_id(table):
-
-    # your code
-
-    pass
+    name = []
+    name_lenght = len(table[0][1])
+    for item in table:
+        if len(item[1]) == name_lenght:
+            name.append(item[1])
+    for num in range(len(name) - 1, 0, -1):
+        for i in range(num):
+            if name[i] > name[i + 1]:
+                temp = name[i]
+                name[i] = name[i + 1]
+                name[i + 1] = temp
+    for line in table:
+        if name[0] == line[1]:
+            return (line[0])
 
 
 # the question: Which customers has subscribed to the newsletter?
 # return type: list of string (where string is like email+separator+name, separator=";")
 def get_subscribed_emails(table):
-
-    # your code
-
-    pass
+    list_subscribed = []
+    for row in table:
+        email = row[2]
+        name = row[1]
+        subscribed = row[3]
+        if subscribed == "1":
+            result_row = "%s; %s" % (email,name)
+            list_subscribed.append(result_row)
+    return list_subscribed
