@@ -50,7 +50,7 @@ def start_module():
             ID = ui.get_inputs(["ID: "], "Updating transaction")
             update(table, ID[0])
         elif option == "5":
-            ui.print_result(which_year_max(table), "Most profitable year: ")
+            ui.print_result(str(which_year_max(table)), "Most profitable year: ")
         elif option == "6":
             avg_year = ui.get_inputs(["Year: "], "")
             result = str(avg_amount(table, avg_year[0]))
