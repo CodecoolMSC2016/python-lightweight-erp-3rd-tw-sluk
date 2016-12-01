@@ -24,13 +24,12 @@ common = SourceFileLoader("common", current_file_path + "/../common.py").load_mo
 # we need to reach the default and the special functions of this module from the module menu
 #
 def start_module():
-    store_table = ["Adding",
-                   "Remove",
-                   "Update",
-                   "Counting by manufacturers",
-                   "Avg stock per manufacturers",
-                   "Pringting out"]
-
+    store_table = ["Show store database"
+                   "Add game",
+                   "Remove game",
+                   "Update game",
+                   "Count games by manufacturers",
+                   "Average games in stock by manufacturers"]
     table = data_manager.get_table_from_file("store/games.csv")
 
     while True:
@@ -38,25 +37,24 @@ def start_module():
         inputs = ui.get_inputs(["Please enter a number: "], "")
         option = inputs[0]
         if option == "1":
-            add(table)
+            show_table(table)
         elif option == "2":
-            ID = ui.get_inputs(["Give an ID: "], "")
-            remove(table, ID[0])
+            add(table)
         elif option == "3":
-            ID = ui.get_inputs(["Give an ID: "], "")
-            update(table, ID[0])
+            ID = ui.get_inputs(["ID: "], "")
+            remove(table, ID[0])
         elif option == "4":
-            ui.print_result(get_counts_by_manufacturers(table), "(number of games by each manifacturers) ")
+            ID = ui.get_inputs(["ID: "], "")
+            update(table, ID[0])
         elif option == "5":
+            ui.print_result(get_counts_by_manufacturers(table), "(number of games by each manifacturers) ")
+        elif option == "6":
             manufact = ui.get_inputs(["Which manufacturer you want to check: "], "")
             result = get_average_by_manufacturer(table, manufact[0])
-            ui.print_result("is the average stock amount by this manufacturer", result)
-        elif option == "6":
-            show_table(table)
+            ui.print_result(result, "is the average stock amount by this manufacturer")
         elif option == "0":
             break
     data_manager.write_table_to_file('store/games.csv', table)
-    pass
 
 
 # print the default table of records from the file
@@ -71,8 +69,8 @@ def show_table(table):
 # @table: list of lists
 def add(table):
 
-    new_id = ui.get_inputs(["Give a title: ", "Give a manufacturer: ", "Give a price: ",
-                            "Give stock number: "], "Adding record")
+    new_id = ui.get_inputs(["Title: ", "Manufacturer: ", "Price: ",
+                            "Games in stock: "], "Adding record")
     id_generated = common.generate_random(table)
     table.append([id_generated, new_id[0], new_id[1], new_id[2], new_id[3]])
     return table
@@ -89,9 +87,8 @@ def remove(table, id_):
             table.remove(i)
             ui.print_result('Item succesfully removed!', '')
     if id_ != i[0]:
-        ui.print_result('ID not found!', '')
+        ui.print_error_message('ID not found!')
     return table
-
 
 
 # Update the record in @table having the id @id_ by asking the new data from the user,
@@ -100,32 +97,29 @@ def remove(table, id_):
 # @table: list of lists
 # @id_: string
 def update(table, id_):
-
     for i in table:
         if id_ in i[0]:
             update_table = ["Title",
-                             "Manufacturer",
-                             "Price",
-                             "In stock number"]
+                            "Manufacturer",
+                            "Price",
+                            "Games in stock"]
             ui.print_menu("What do you want to change?", update_table, "Back to store menu")
             inputs = ui.get_inputs(["Please enter a number: "], "")
             option = inputs[0]
+            if option == "0":
+                break
+            updating = ui.get_inputs([update_table[int(option) - 1] + ": "], "")
             if option == "1":
-                updating = ui.get_inputs(["Write in the record:"], "")
                 i[1] = updating[0]
             elif option == "2":
-                updating = ui.get_inputs(["Write in the record:"], "")
                 i[2] = updating[0]
             elif option == "3":
-                updating = ui.get_inputs(["Write in the record:"], "")
                 i[3] = updating[0]
             elif option == "4":
-                updating = ui.get_inputs(["Write in the record:"], "")
                 i[4] = updating[0]
-            elif option == "0":
-                break
+            ui.print_result('Transaction succesfully updated!', '')
     if id_ not in i[0]:
-        ui.print_result("ID do not exist", "")
+        ui.print_error_message("ID do not exist")
     return table
 
 
