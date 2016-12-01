@@ -79,7 +79,7 @@ def print_result(result, label):
     elif isinstance(result, dict):
         print(label)
         for key, value in result.items():
-            print(key + ": " + value)
+            print(str(key) + ": " + str(value))
     else:
         print("")
     get_inputs(["Press enter to continue..."], "")
