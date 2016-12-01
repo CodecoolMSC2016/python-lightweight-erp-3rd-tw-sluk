@@ -2,6 +2,7 @@
 
 import random
 import string
+import datetime
 
 
 # generate and return a unique and random string
@@ -35,3 +36,16 @@ def custom_sum(int_list):
     for number in int_list:
         sum_of_numbers += int(number)
     return sum_of_numbers
+
+
+def parse_date(date_string):
+    """ Parse date from 'dd/mm/yyy' or 'dd.mm.yyy' format (else raise ValueError), and return date as a dict """
+    if len(date_string.split('/')) == 3:
+        sep = '/'
+    elif len(date_string.split('.')) == 3:
+        sep = '.'
+    else:
+        raise ValueError("Invalid format")
+    date = datetime.date(int(date_string.split(sep)[2]), int(date_string.split(sep)[1]), int(date_string.split(sep)[0]))
+    date_dict = {"day": date.day, "month": date.month, "year": date.year}
+    return date_dict
