@@ -55,7 +55,8 @@ def start_module():
             show_table(table)
         elif option == "0":
             break
-
+    data_manager.write_table_to_file('store/games.csv', table)
+    pass
 
 
 # print the default table of records from the file
@@ -74,7 +75,6 @@ def add(table):
                             "Give stock number: "], "Adding record")
     id_generated = common.generate_random(table)
     table.append([id_generated, new_id[0], new_id[1], new_id[2], new_id[3]])
-    data_manager.write_table_to_file('store/games.csv', table)
     return table
 
 
@@ -90,7 +90,6 @@ def remove(table, id_):
             ui.print_result('Item succesfully removed!', '')
     if id_ != i[0]:
         ui.print_result('ID not found!', '')
-    data_manager.write_table_to_file('store/games.csv', table)
     return table
 
 
@@ -107,8 +106,7 @@ def update(table, id_):
             update_table = ["Title",
                              "Manufacturer",
                              "Price",
-                             "In stock number",
-                             "Amount"]
+                             "In stock number"]
             ui.print_menu("What do you want to change?", update_table, "Back to store menu")
             inputs = ui.get_inputs(["Please enter a number: "], "")
             option = inputs[0]
@@ -124,15 +122,10 @@ def update(table, id_):
             elif option == "4":
                 updating = ui.get_inputs(["Write in the record:"], "")
                 i[4] = updating[0]
-            elif option == "5":
-                updating = ui.get_inputs(["Write in the record:"], "")
-                i[5] = updating[0]
             elif option == "0":
                 break
     if id_ not in i[0]:
         ui.print_result("ID do not exist", "")
-        ui.get_inputs(["Press any key to continue..."], "")
-    data_manager.write_table_to_file('store/games.csv', table)
     return table
 
 

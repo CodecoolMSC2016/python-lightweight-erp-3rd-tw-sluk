@@ -96,7 +96,6 @@ def remove(table, id_):
             ui.print_result('Item succesfully removed!', '')
     if id_ != i[0]:
         ui.print_result('ID not found!', '')
-    data_manager.write_table_to_file('accounting/items.csv', table)
     return table
 
 
