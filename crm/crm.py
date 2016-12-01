@@ -74,7 +74,7 @@ def show_table(table):
 #
 # @table: list of lists
 def add(table):
-    new_id = ui.get_inputs(["Give an ID: ", "Give a name", "Give an emeail:", "Subscribed?" ],
+    new_id = ui.get_inputs(["Give an ID: ", "Give a name", "Give an email:", "Subscribed?" ],
     "Adding record")
 
     table.append([new_id[0], new_id[1], new_id[2], new_id[3]])
@@ -87,10 +87,10 @@ def add(table):
 # @table: list of lists
 # @id_: string
 def remove(table, id_):
-    user_id = str(id_[0])
+    id_ = str(id_[0])
     for row in table:
       original_id = row[0]
-      if original_id == user_id:
+      if original_id == id:
           table.remove(row)
     return table
 
@@ -121,12 +121,13 @@ def get_longest_name_id(table):
     for item in table:
         if len(item[1]) == name_lenght:
             name.append(item[1])
-        for num in range(len(name) - 1, 0, -1):
-         for i in range(num):
+    for num in range(len(name) - 1, 0, -1):
+        for i in range(num):
             if name[i] > name[i + 1]:
                 temp = name[i]
                 name[i] = name[i + 1]
                 name[i + 1] = temp
+    # az id meghatározása
     for line in table:
         if name[0] == line[1]:
             return (line[0])
@@ -135,12 +136,12 @@ def get_longest_name_id(table):
 # the question: Which customers has subscribed to the newsletter?
 # return type: list of string (where string is like email+separator+name, separator=";")
 def get_subscribed_emails(table):
-        list_subscribed = []
-        for row in table:
-            subscribed = row[3]
-        if subscribed == "1":
-            email = row[2]
-            name = row[1]
-            result_row = email + ";" + name
-            list_subscribed.append(result_row)
-        return list_subscribed
+    list_subscribed = []
+    for row in table:
+        subscribed = row[3]
+    if subscribed == "1":
+        email = row[2]
+        name = row[1]
+        result_row = email + ";" + name
+        list_subscribed.append(result_row)
+    return list_subscribed
