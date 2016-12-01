@@ -11,6 +11,7 @@
 
 # importing everything you need
 import os
+import datetime
 from importlib.machinery import SourceFileLoader
 current_file_path = os.path.dirname(os.path.abspath(__file__))
 # User interface module
@@ -31,8 +32,7 @@ def start_module():
                     "Add selling",
                     "Remove selling",
                     "Update selling",
-                    "Lowest priced item's ID",
-                    "Sold between"]
+                    "Lowest priced item's ID"]
     while True:
         ui.print_menu("Selling", selling_menu, "Save and back to main menu")
         inputs = ui.get_inputs(["Please enter a number: "], "")
@@ -57,7 +57,7 @@ def start_module():
         elif option == "5":
             ui.print_result(get_lowest_price_item_id(selling_table), "Lowest priced item's ID:")
         elif option == "6":
-            pass
+            raise NotImplementedError
         elif option == "0":
             break
     data_manager.write_table_to_file("sellings.csv", selling_table)
@@ -135,16 +135,17 @@ def update(table, id_):
 # return type: string (id)
 # if there are more than one with the lowest price, return the first of descending alphabetical order
 def get_lowest_price_item_id(table):
-
-    # TODO:your code
-
-    pass
+    lowest_ID = ""
+    lowest_price = int(table[0][2])
+    for record in table:
+        if int(record[2]) < int(lowest_price):
+            lowest_ID = record[0]
+            lowest_price = record[2]
+    return lowest_ID
 
 
 # the question: Which items are sold between two given dates ? (from_date < birth_date < to_date)
 # return type: list of lists (the filtered table)
 def get_items_sold_between(table, month_from, day_from, year_from, month_to, day_to, year_to):
-
-    # TODO:your code
-
-    pass
+    date_from = datetime.date(year_from, month_from, day_from)
+    date_to = datetime.date(year_to, month_to, day_to)
