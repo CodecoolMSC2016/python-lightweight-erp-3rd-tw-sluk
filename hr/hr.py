@@ -130,17 +130,30 @@ def get_oldest_person(table):
 # the question: Who is the closest to the average age ?
 # return type: list of strings (name or names if there are two more with the same value)
 def get_persons_closest_to_average(table):
-    person_closest_average = []
-    average = 0
-    counter = 0
+    checker = 0
+    sum_of_ages = 0
+    current_year = 2016
     for row in table:
-        average += int(row[2])
-        counter += 1
-    average = average / counter
-    difference = 9999
-    if abs(int(row[2]) - average) < difference:
-        difference = abs(int(row[2]) - average)
+        born_year = int(row[2])
+        sum_of_ages += current_year - born_year
+        checker += 1
+    average_age = sum_of_ages / checker
+    min_age = 200
+    list_of_names = []
     for row in table:
-        if difference == abs(int(row[2]) - average):
-            person_closest_average.append(row[1])
-    return person_closest_average
+        born_year = int(row[2])
+        result = (current_year - born_year) - average_age
+        if result < 0:
+            result *= -1
+        if result < min_age:
+            min_age = result
+    for row in table:
+        born_year = int(row[2])
+        name = row[1]
+        result = (current_year - born_year) - average_age
+        if result < 0:
+            result *= -1
+        if result == min_age:
+            if row not in list_of_names:
+                list_of_names.append(name)
+    return list_of_names

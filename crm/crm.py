@@ -61,7 +61,6 @@ def start_module():
                 raise KeyError("There is no such option.")
 
 
-
 # print the default table of records from the file
 #
 # @table: list of lists
@@ -111,6 +110,7 @@ def update(table, id_):
         table[row] = new_data
     return table
 
+
 # special functions:
 # ------------------
 # the question: What is the id of the customer with the longest name ?
@@ -127,7 +127,6 @@ def get_longest_name_id(table):
                 temp = name[i]
                 name[i] = name[i + 1]
                 name[i + 1] = temp
-    # az id meghatározása
     for line in table:
         if name[0] == line[1]:
             return (line[0])
@@ -138,10 +137,10 @@ def get_longest_name_id(table):
 def get_subscribed_emails(table):
     list_subscribed = []
     for row in table:
-        subscribed = row[3]
-    if subscribed == "1":
         email = row[2]
         name = row[1]
-        result_row = email + ";" + name
-        list_subscribed.append(result_row)
+        subscribed = row[3]
+        if subscribed == "1":
+            result_row = "%s; %s" % (email,name)
+            list_subscribed.append(result_row)
     return list_subscribed
