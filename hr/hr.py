@@ -59,7 +59,6 @@ def start_module():
             break
         else:
             raise KeyError("There is no such option.")
-        return
 
 
 # print the default table of records from the file
