@@ -40,10 +40,12 @@ def start_module():
             table = add(table)
         elif option == "3":
             id_ = ui.get_inputs(["Please enter an ID to remove: "], "")
-            table = remove(table, id_[0])
+            table = remove(table, id_)
+            data_manager.write_table_to_file("hr/persons.csv", table)
         elif option == "4":
             id_ = ui.get_inputs(["Please enter an ID to update: "], "")
-            table = update(table, id_[0])
+            table = update(table, id_)
+            data_manager.write_table_to_file("hr/persons.csv", table)
         elif option == "5":
             label = "The oldest person is:"
             result = get_oldest_person(table)
@@ -65,6 +67,7 @@ def show_table(table):
     ui.print_table(data_manager.get_table_from_file("hr/persons.csv"), title_list)
 
 
+
 # Ask a new record as an input from the user than add it to @table, than return @table
 #
 # @table: list of lists
@@ -81,12 +84,11 @@ def add(table):
 # @table: list of lists
 # @id_: string
 def remove(table, id_):
-    if id_ != i[0]:
-        ui.print_error_message('ID not found!')
+    id_ = str(id_[0])
     for row in table:
-        if id_ in row:
-            table.remove(row)
-            ui.print_result('Item succesfully removed!', '')
+      original_id = row[0]
+      if original_id == id_:
+          table.remove(row)
     return table
 
 
@@ -104,7 +106,7 @@ def update(table, id_):
             new_data = ui.get_inputs(list_labels, "Update data")
             new_data.insert(0, user_id)
             table[row] = new_data
-            return table
+    return table
 
 
 # special functions:
