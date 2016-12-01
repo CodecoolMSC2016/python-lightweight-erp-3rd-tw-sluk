@@ -69,7 +69,7 @@ def show_table(table):
 #
 # @table: list of lists
 def add(table):
-    new_id = ui.get_inputs(["Give an ID: ", "Give a name", "Give a birthday: "],
+    new_id = ui.get_inputs(["ID: ", "Name", "Birthyear: "],
                            "Adding record")
     table.append([new_id[0], new_id[1], new_id[2]])
     data_manager.write_table_to_file('hr/persons.csv', table)
@@ -122,14 +122,12 @@ def get_oldest_person(table):
     for name in table:
         if int(name[2]) == min:
             people.append(name[1])
-    print(people)
     return people
 
 
 # the question: Who is the closest to the average age ?
 # return type: list of strings (name or names if there are two more with the same value)
 def get_persons_closest_to_average(table):
-
     person_closest_average = []
     average = 0
     counter = 0
