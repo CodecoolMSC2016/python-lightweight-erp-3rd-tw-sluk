@@ -27,12 +27,12 @@ common = SourceFileLoader("common", current_file_path + "/../common.py").load_mo
 #
 def start_module():
 
-    account_table = ["Adding",
-                     "Remove",
-                     "Update",
+    account_table = ["Adding transaction",
+                     "Removing transaction",
+                     "Updating transaction",
                      "Highest profit",
-                     "Avg profit",
-                     "Pringting out"]
+                     "Average profit",
+                     "Showing all transaction"]
 
     table = data_manager.get_table_from_file("accounting/items.csv")
 
@@ -41,10 +41,10 @@ def start_module():
         inputs = ui.get_inputs(["Please enter a number: "], "")
         option = inputs[0]
         if option == "1":
-            add(table)
+            table = add(table)
         elif option == "2":
             ID = ui.get_inputs(["Give an ID: "], "")
-            remove(table, ID[0])
+            table = remove(table, ID[0])
         elif option == "3":
             ID = ui.get_inputs(["Give an ID: "], "")
             update(table, ID[0])
@@ -59,14 +59,12 @@ def start_module():
         elif option == "0":
             break
     data_manager.write_table_to_file('accounting/items.csv', table)
-    pass
 
 
 # print the default table of records from the file
 #
 # @table: list of lists
 def show_table(table):
-    print(table)
     ui.print_table(table, ["ID", "Month", "Day", "Year", "In/out", "Amount"])
 
 
@@ -75,7 +73,7 @@ def show_table(table):
 # @table: list of lists
 def add(table):
 
-    new_id = ui.get_inputs(["Give a date (dd/mm/yyyy): ", "In/out: ", "Amount: "], "Adding record")
+    new_id = ui.get_inputs(["Date (dd/mm/yyyy): ", "In/out: ", "Amount: "], "Adding record")
     account_date = common.parse_date(new_id[0])
 
     new_record = [common.generate_random(table), str(account_date["month"]), str(account_date["day"]),
@@ -95,7 +93,7 @@ def remove(table, id_):
             table.remove(i)
             ui.print_result('Item succesfully removed!', '')
     if id_ != i[0]:
-        ui.print_result('ID not found!', '')
+        ui.print_error_message('ID not found!')
     return table
 
 
@@ -108,10 +106,10 @@ def update(table, id_):
     for i in table:
         if id_ in i[0]:
             update_table = ["Month",
-                             "Day",
-                             "Year",
-                             "In/Out",
-                             "Amount"]
+                            "Day",
+                            "Year",
+                            "In/Out",
+                            "Amount"]
             ui.print_menu("What do you want to change?", update_table, "Back to accounting menu")
             inputs = ui.get_inputs(["Please enter a number: "], "")
             option = inputs[0]
@@ -134,7 +132,7 @@ def update(table, id_):
             elif option == "0":
                 break
     if id_ not in i[0]:
-        ui.print_result("ID do not exist", "")
+        ui.print_error_message("ID do not exist")
     return table
 
 
@@ -152,6 +150,7 @@ def which_year_max(table):
         if max_profit == table[i][5]:
             year = table[i][3]
     return int(year)
+
 
 # the question: What is the average (per item) profit in a given year? [(profit)/(items count) ]
 # return the answer (number)
