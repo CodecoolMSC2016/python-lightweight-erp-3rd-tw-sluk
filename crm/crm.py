@@ -22,7 +22,7 @@ common = SourceFileLoader("common", current_file_path + "/../common.py").load_mo
 # user need to go back to the main menu from here
 # we need to reach the default and the special functions of this module from the module menu
 #
-def start_module():    
+def start_module():
         table = data_manager.get_table_from_file("crm/customers.csv")
         while True:
             options = ["Print the table records",
