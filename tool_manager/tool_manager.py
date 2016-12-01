@@ -26,12 +26,12 @@ common = SourceFileLoader("common", current_file_path + "/../common.py").load_mo
 #
 def start_module():
 
-    tool_table = ["Adding",
-                   "Remove",
-                   "Update",
-                   "Not exceeded tools list",
-                   "Average durability time",
-                   "Pringting out"]
+    tool_table = ["Show tool database",
+                  "Add tool",
+                  "Remove tool",
+                  "Update tool",
+                  "Not exceeded tools list",
+                  "Average durability time"]
 
     table = data_manager.get_table_from_file("tool_manager/tools.csv")
     while True:
@@ -39,20 +39,21 @@ def start_module():
         inputs = ui.get_inputs(["Please enter a number: "], "")
         option = inputs[0]
         if option == "1":
-            add(table)
+            show_table(table)
         elif option == "2":
-            ID = ui.get_inputs(["Give an ID: "], "")
-            remove(table, ID[0])
+            add(table)
         elif option == "3":
             ID = ui.get_inputs(["Give an ID: "], "")
-            update(table, ID[0])
+            remove(table, ID[0])
         elif option == "4":
-            ui.print_result(get_available_tools(table), "These are not exceeded tools")
+            ID = ui.get_inputs(["Give an ID: "], "")
+            update(table, ID[0])
         elif option == "5":
-            result = get_average_durability_by_manufacturers(table)
-            ui.print_result("is the average stock amount manufacturer", result)
+            result = str(get_available_tools(table))
+            ui.print_result(result, "These are not exceeded tools")
         elif option == "6":
-            show_table(table)
+            result = str(get_average_durability_by_manufacturers(table))
+            ui.print_result("is the average stock amount manufacturer", result)
         elif option == "0":
             break
 
