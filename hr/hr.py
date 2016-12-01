@@ -20,7 +20,7 @@ common = SourceFileLoader("common", current_file_path + "/../common.py").load_mo
 # start this module by a module menu like the main menu
 # user need to go back to the main menu from here
 # we need to reach the default and the special functions of this module from the module menu
-#==
+#
 def start_module():
     table = data_manager.get_table_from_file("hr/persons.csv")
     while True:
@@ -50,17 +50,17 @@ def start_module():
         elif option == "5":
             label = "The oldest person is:"
             result = get_oldest_person(table)
-            ui.print_result(result,label)
+            ui.print_result(result, label)
         elif option == "6":
             label = "Person closest to average age:"
-            result =  get_persons_closest_to_average(table)
-            ui.print_result(result,label)
+            result = get_persons_closest_to_average(table)
+            ui.print_result(result, label)
         elif option == "0":
             break
         else:
             raise KeyError("There is no such option.")
-        return
-pass
+
+
 # print the default table of records from the file
 #
 # @table: list of lists
@@ -73,13 +73,14 @@ def show_table(table):
 #
 # @table: list of lists
 def add(table):
-      title_list = ["name", "birth year"]
-      args = []
-      args.append(common.generate_random(table))
-      for arg in range(len(title_list)):
-          args.append(ui.get_inputs(("Please enter the " + title_list[arg]), ""))
-          table.append(args)
-          return table
+    title_list = ["name", "birth year"]
+    args = []
+    args.append(common.generate_random(table))
+    for arg in range(len(title_list)):
+        args.append(ui.get_inputs(("Please enter the " + title_list[arg]), ""))
+        table.append(args)
+        return table
+
 
 # Remove the record having the id @id_ from the @list, than return @table
 #
@@ -92,6 +93,8 @@ def remove(table, id_):
         if original_id == user_id:
             table.remove(row)
     return table
+
+
 # Update the record in @table having the id @id_ by asking the new data from the user,
 # than return @table
 #
@@ -103,9 +106,9 @@ def update(table, id_):
     for row in range(len(table)):
         original_id = table[row][0]
         if original_id == user_id:
-            new_data = ui.get_inputs(list_labels,"Update data")
+            new_data = ui.get_inputs(list_labels, "Update data")
             new_data.insert(0, user_id)
-            table[row]= new_data
+            table[row] = new_data
             return table
 
 
@@ -125,6 +128,7 @@ def get_oldest_person(table):
         if int(name[2]) == min:
             people.append(name[1])
     return people
+
 
 # the question: Who is the closest to the average age ?
 # return type: list of strings (name or names if there are two more with the same value)
