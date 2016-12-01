@@ -74,7 +74,7 @@ def show_table(table):
 #
 # @table: list of lists
 def add(table):
-    new_id = ui.get_inputs(["Give an ID: ", "Give a name", "Give an email:", "Subscribed?" ],
+    new_id = ui.get_inputs(["Give an ID: ", "Give a name: ", "Give an email: ", "Subscribed? " ],
     "Adding record")
 
     table.append([new_id[0], new_id[1], new_id[2], new_id[3]])
@@ -101,13 +101,13 @@ def remove(table, id_):
 # @table: list of lists
 # @id_: string
 def update(table, id_):
-    list_labels = ["name", "birthdate"]
-    user_id = str(id_[0])
+    list_labels = ["id: ", "name: ", "email: ", "subscribed? "]
+    id_ = str(id_[0])
     for row in range(len(table)):
         original_id = table[row][0]
-    if original_id == user_id:
+    if original_id == id_:
         new_data = ui.get_inputs(list_labels, "Update data")
-        new_data.insert(0, user_id)
+        new_data.insert(0, id_)
         table[row] = new_data
     return table
 
