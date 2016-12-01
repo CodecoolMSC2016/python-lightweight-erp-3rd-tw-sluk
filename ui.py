@@ -75,7 +75,9 @@ def print_result(result, label):
     if isinstance(result, str):
         print(label, result)
     elif isinstance(result, list):
-        pass
+        print(label)
+        for line in result:
+            print(line)
     elif isinstance(result, dict):
         print(label)
         for key, value in result.items():
