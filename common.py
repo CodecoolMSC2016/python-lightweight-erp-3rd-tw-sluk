@@ -1,6 +1,7 @@
 # implement commonly used functions here
 
 import random
+import string
 
 
 # generate and return a unique and random string
@@ -11,12 +12,21 @@ import random
 # @table: list of list
 # @generated: string - generated random string (unique in the @table)
 def generate_random(table):
-
-    generated = ''
-
-    # your code
-
-    return generated
+    """ Return unique (not in @table) ID """
+    chars = (''.join([ch for ch in string.punctuation if ch not in ' ;']),
+             string.digits,
+             string.ascii_lowercase,
+             string.ascii_uppercase)
+    generated_list = []
+    for char_group in chars:
+        for value in range(2):
+            generated_list.append(random.choice(char_group))
+    random.shuffle(generated_list)
+    generated = ''.join(generated_list)
+    if generated in [line[0] for line in table]:
+        return generate_random(table)
+    else:
+        return generated
 
 
 def custom_sum(int_list):
