@@ -39,13 +39,13 @@ def start_module():
         if option == "1":
             show_table(table)
         elif option == "2":
-            add(table)
+            table = add(table)
         elif option == "3":
             ID = ui.get_inputs(["ID: "], "")
-            remove(table, ID[0])
+            table = remove(table, ID[0])
         elif option == "4":
             ID = ui.get_inputs(["ID: "], "")
-            update(table, ID[0])
+            table = update(table, ID[0])
         elif option == "5":
             ui.print_result(get_counts_by_manufacturers(table), "(number of games by each manifacturers) ")
         elif option == "6":
@@ -68,7 +68,6 @@ def show_table(table):
 #
 # @table: list of lists
 def add(table):
-
     new_id = ui.get_inputs(["Title: ", "Manufacturer: ", "Price: ",
                             "Games in stock: "], "Adding record")
     id_generated = common.generate_random(table)
@@ -81,13 +80,12 @@ def add(table):
 # @table: list of lists
 # @id_: string
 def remove(table, id_):
-
+    if id_ != i[0]:
+        ui.print_error_message('ID not found!')
     for i in table:
         if id_ in i[0]:
             table.remove(i)
             ui.print_result('Item succesfully removed!', '')
-    if id_ != i[0]:
-        ui.print_error_message('ID not found!')
     return table
 
 

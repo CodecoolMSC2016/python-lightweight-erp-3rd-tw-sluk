@@ -24,12 +24,12 @@ common = SourceFileLoader("common", current_file_path + "/../common.py").load_mo
 def start_module():
     table = data_manager.get_table_from_file("hr/persons.csv")
     while True:
-        options = ["Print the table records",
-                   "Add an item to the table",
-                   "Remove from table",
-                   "Update an item in the table",
-                   "Who is the oldest person?",
-                   "Who is the closest to the average age year?"]
+        options = ["Show HR database",
+                   "Add employee",
+                   "Remove employee",
+                   "Update employee",
+                   "Oldest employee",
+                   "Most average employee (in age)"]
 
         ui.print_menu("Human Resources", options, "Back")
         inputs = ui.get_inputs(["Please enter a number: "], "")
@@ -37,16 +37,13 @@ def start_module():
         if option == "1":
             show_table(table)
         elif option == "2":
-            add(table)
-            data_manager.write_table_to_file("hr/persons.csv", table)
+            table = add(table)
         elif option == "3":
             id_ = ui.get_inputs(["Please enter an ID to remove: "], "")
-            remove(table, id_)
-            data_manager.write_table_to_file("hr/persons.csv", table)
+            table = remove(table, id_[0])
         elif option == "4":
             id_ = ui.get_inputs(["Please enter an ID to update: "], "")
-            update(table, id_)
-            data_manager.write_table_to_file("hr/persons.csv", table)
+            table = update(table, id_[0])
         elif option == "5":
             label = "The oldest person is:"
             result = get_oldest_person(table)
@@ -57,8 +54,7 @@ def start_module():
             ui.print_result(result, label)
         elif option == "0":
             break
-        else:
-            raise KeyError("There is no such option.")
+    data_manager.write_table_to_file("hr/persons.csv", table)
 
 
 # print the default table of records from the file
@@ -73,22 +69,25 @@ def show_table(table):
 #
 # @table: list of lists
 def add(table):
-    new_id = ui.get_inputs(["Give an ID: ", "Give a name", "Give a birthday: ", ],
-    "Adding record")
-
-    table.append([new_id[0], new_id[1], new_id[2],])
+    new_id = ui.get_inputs(["ID: ", "Name", "Birthyear: "],
+                           "Adding record")
+    table.append([new_id[0], new_id[1], new_id[2]])
     data_manager.write_table_to_file('hr/persons.csv', table)
     return table
+
+
 # Remove the record having the id @id_ from the @list, than return @table
 #
 # @table: list of lists
 # @id_: string
 def remove(table, id_):
-      user_id = str(id_[0])
-      for row in table:
-        original_id = row[0]
-        if original_id == user_id:
+    if id_ != i[0]:
+        ui.print_error_message('ID not found!')
+    for row in table:
+        if id_ in row:
             table.remove(row)
+            ui.print_result('Item succesfully removed!', '')
+    return table
 
 
 # Update the record in @table having the id @id_ by asking the new data from the user,
