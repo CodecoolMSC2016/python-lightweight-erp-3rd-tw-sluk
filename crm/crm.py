@@ -90,7 +90,7 @@ def remove(table, id_):
     id_ = str(id_[0])
     for row in table:
       original_id = row[0]
-      if original_id == id:
+      if original_id == id_:
           table.remove(row)
     return table
 
