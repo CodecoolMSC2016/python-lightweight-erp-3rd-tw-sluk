@@ -78,11 +78,11 @@ def print_result(result, label):
     elif isinstance(result, list):
         print(label)
         for line in result:
-            print(line)
+            print("  " + line)
     elif isinstance(result, dict):
         print(label)
         for key, value in result.items():
-            print(str(key) + ": " + str(value))
+            print("  " + str(key) + ": " + str(value))
     else:
         print("")
     get_inputs(["Press enter to continue..."], "")

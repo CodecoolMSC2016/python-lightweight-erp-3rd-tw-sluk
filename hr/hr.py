@@ -73,12 +73,14 @@ def show_table(table):
 #
 # @table: list of lists
 def add(table):
-    new_id = ui.get_inputs(["Give an ID: ", "Give a name", "Give a birthday: ", ],
-    "Adding record")
+    new_id = ui.get_inputs(["Give an ID: ", "Give a name", "Give a birthday: "],
+                           "Adding record")
 
-    table.append([new_id[0], new_id[1], new_id[2],])
+    table.append([new_id[0], new_id[1], new_id[2]])
     data_manager.write_table_to_file('hr/persons.csv', table)
     return table
+
+
 # Remove the record having the id @id_ from the @list, than return @table
 #
 # @table: list of lists
