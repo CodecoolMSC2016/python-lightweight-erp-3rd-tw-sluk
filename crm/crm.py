@@ -24,9 +24,45 @@ common = SourceFileLoader("common", current_file_path + "/../common.py").load_mo
 #
 def start_module():
 
-    # you code
+    def start_module():
+        table = data_manager.get_table_from_file("cr/customers.csv")
+        while True:
+            options = ["Print the table records",
+                       "Add an item to the table",
+                       "Remove from table",
+                       "Update an item in the table",
+                       "Who is the customer with the longest name?",
+                       "Who subscribed to emails?"]
 
-    pass
+            ui.print_menu("Customer Relationship Management", options, "Back")
+            inputs = ui.get_inputs(["Please enter a number: "], "")
+            option = inputs[0]
+            if option == "1":
+                show_table(table)
+            elif option == "2":
+                add(table)
+                data_manager.write_table_to_file("crm/customers.csv", table)
+            elif option == "3":
+                id_ = ui.get_inputs(["Please enter an ID to remove: "], "")
+                remove(table, id_)
+                data_manager.write_table_to_file("crm/customers.csv", table)
+            elif option == "4":
+                id_ = ui.get_inputs(["Please enter an ID to update: "], "")
+                update(table, id_)
+                data_manager.write_table_to_file("crm/customers.csv", table)
+            elif option == "5":
+                label = "The longest customer name id is:"
+                result = get_longest_name_id(table)
+                ui.print_result(result, label)
+            elif option == "6":
+                label = "Customers, who subscribedemails"
+                result = get_subscribed_emails(table)
+                ui.print_result(result, label)
+            elif option == "0":
+                break
+            else:
+                raise KeyError("There is no such option.")
+
 
 
 # print the default table of records from the file
