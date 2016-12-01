@@ -29,7 +29,7 @@ def start_module():
                    "Remove employee",
                    "Update employee",
                    "Oldest employee",
-                   "Most average employee (in age)"]
+                   "Closest employee to the avarage age"]
 
         ui.print_menu("Human Resources", options, "Back")
         inputs = ui.get_inputs(["Please enter a number: "], "")
@@ -72,7 +72,7 @@ def show_table(table):
 #
 # @table: list of lists
 def add(table):
-    new_id = ui.get_inputs(["ID: ", "Name", "Birthyear: "],
+    new_id = ui.get_inputs(["ID: ", "Name: ", "Birthyear: "],
                            "Adding record")
     table.append([new_id[0], new_id[1], new_id[2]])
     data_manager.write_table_to_file('hr/persons.csv', table)
@@ -98,7 +98,7 @@ def remove(table, id_):
 # @t    able: list of lists
 # @id_: string
 def update(table, id_):
-    list_labels = ["name", "birthdate"]
+    list_labels = ["Name: ", "Birth date: "]
     user_id = str(id_[0])
     for row in range(len(table)):
         original_id = table[row][0]
@@ -127,7 +127,7 @@ def get_oldest_person(table):
     return people
 
 
-# the question: Who is the closest to the average age ?
+# the question: v
 # return type: list of strings (name or names if there are two more with the same value)
 def get_persons_closest_to_average(table):
     checker = 0
